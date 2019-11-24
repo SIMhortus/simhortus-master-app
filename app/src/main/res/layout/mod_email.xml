@@ -52,7 +52,7 @@
             android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
             android:textColor="@color/greyLight"
             android:textSize="15dp"
             android:hint="Enter your password to confirm"
