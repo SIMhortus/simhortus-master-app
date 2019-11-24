@@ -24,6 +24,8 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
 
     private EditText fName, lName, email, password;
     private Button button;
+
+    //paano ko ba tong gagawin dynamic? pauliulit ko siyang ginamit
     private FirebaseAuth mAuth;
 
     private AwesomeValidation awesomeValidation;
@@ -44,19 +46,28 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
 
         awesomeValidation.addValidation(this, R.id.fName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.fName);
         awesomeValidation.addValidation(this, R.id.lName, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.lName);
-        awesomeValidation.addValidation(this, R.id.email, Patterns.EMAIL_ADDRESS, R.string.lName);
+        awesomeValidation.addValidation(this, R.id.email, Patterns.EMAIL_ADDRESS, R.string.email);
         awesomeValidation.addValidation(this, R.id.password, "^.{8,}$", R.string.password);
 
         mAuth = FirebaseAuth.getInstance();
 
         button.setOnClickListener(this);
-
-
     }
 
     public void goToLogIn(View v){
         startActivity(new Intent(this, MainActivity.class));
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //repeating code
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(this, AccountSettings.class));
+        }
+
+    }
+
 
     private void submitForm() {
         //first validate the form then move ahead

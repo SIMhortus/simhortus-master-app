@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="330dp"
+    android:padding="10dp"
+    android:background="@drawable/bg_mod_layout"
+    android:layout_height="190dp">
+
+    <ImageButton
+        android:id="@+id/close"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@color/transparent"
+        android:layout_gravity="right"
+        android:src="@drawable/ic_close"
+        android:layout_marginBottom="10dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/email_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:textColor="@color/greyDarker"
+            android:text="Change your Email"
+            android:textAllCaps="true"
+            android:layout_marginBottom="12dp"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/inputEmail"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/greyLight"
+        android:textSize="15dp"
+        android:hint="Enter your new email"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
+        />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputPass"
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/greyLight"
+            android:textSize="15dp"
+            android:hint="Enter your password to confirm"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="5dp"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_success"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textColor="#219954"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="12dp"
+            style="@style/PrimaryFlatButton"
+            android:text="Update" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

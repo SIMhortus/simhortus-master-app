@@ -38,7 +38,7 @@
 
             <EditText
                 android:background="@color/transparent"
-                android:id="@+id/edit_text"
+                android:id="@+id/lEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
@@ -53,6 +53,7 @@
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lPassword"
                 android:background="@color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,6 +64,7 @@
 
         <TextView
             android:layout_marginTop="10dp"
+            android:onClick="gotoForgotPass"
             android:id="@+id/forgot_password"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -73,12 +75,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:layout_marginTop="10dp"
-            android:id="@+id/button"
+            android:id="@+id/btnLogin"
             style="@style/PrimaryFlatButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="15dp"
-            android:text="SIGN IN"
+            android:text="LOG IN"
             app:elevation="10dp" />
 
         <LinearLayout
