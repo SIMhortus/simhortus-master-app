@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1085939297141",
+    "firebase_url": "https://simhortus-master.firebaseio.com",
+    "project_id": "simhortus-master",
+    "storage_bucket": "simhortus-master.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085939297141:android:b6bd7be6250f53733cc13c",
+        "android_client_info": {
+          "package_name": "com.example.simhortus_master"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085939297141-1lsviodeepaj0344urjb2803e294tgmf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.simhortus_master",
+            "certificate_hash": "3be5c22860feed924de22ee086184e028e164893"
+          }
+        },
+        {
+          "client_id": "1085939297141-gp919etfi0hsanjmq37sbd5lrjt3f65g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANcVtgjQLmi5yp1enSDq0jtVlmzla_e3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085939297141-gp919etfi0hsanjmq37sbd5lrjt3f65g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

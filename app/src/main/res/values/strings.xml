@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">simhortus-master</string>
+    <string name="fName">Enter a valid first name</string>
+    <string name="lName">Enter a valid last name</string>
+    <string name="email">Enter a valid email</string>
+    <string name="password">password is too short</string>
+
+
 </resources>
