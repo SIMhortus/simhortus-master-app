@@ -18,6 +18,7 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,7 +58,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
 
-                            Intent intent = new Intent(Login.this, AccountSettings.class);
+                            Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                             finish();
 
@@ -90,5 +91,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (v == buttonL) {
             submitForm();
         }
+    }
+
+    protected void onStart() {
+        super.onStart();
+
+        final FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null) {
+            startActivity(new Intent(Login.this, MainActivity.class));
+
+        }
+
     }
 }

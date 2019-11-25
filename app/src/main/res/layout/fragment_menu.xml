@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFF">
 
 
@@ -9,6 +11,244 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="#FFFFFF"
     android:layout_height="match_parent">
+        <TextView
+            android:layout_marginVertical="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:textColor="@color/greyDarker"
+            android:text="Account Settings"
+            android:layout_marginBottom="10dp"/>
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:background="@drawable/bg_indigo"
+                android:layout_gravity="center_vertical"
+                android:tint="#FCF7F7"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_name" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/greyDarker"
+                    android:layout_height="wrap_content"
+                    android:textSize="13dp"
+                    android:text="Display Name"/>
+
+                <TextView
+                    android:paddingHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13dp"
+                    android:text="Full name here"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_disp_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_gravity="right"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="#38A746"
+                android:textSize="12dp" />
+
+        </GridLayout>
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:background="@drawable/bg_green"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/white"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_name" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/greyDarker"
+                    android:layout_height="wrap_content"
+                    android:textSize="13dp"
+                    android:text="Email"/>
+
+                <TextView
+                    android:paddingHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13dp"
+                    android:text="Email here"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_gravity="right"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="#38A746"
+                android:textSize="12dp" />
+
+        </GridLayout>
+
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:background="@drawable/bg_pink"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/white"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_phone" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/greyDarker"
+                    android:layout_height="wrap_content"
+                    android:textSize="13dp"
+                    android:text="Contact no"/>
+
+                <TextView
+                    android:paddingHorizontal="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13dp"
+                    android:text="Phone no here"/>
+
+            </LinearLayout>
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_gravity="right"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="#38A746"
+                android:textSize="12dp" />
+
+        </GridLayout>
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:background="@drawable/bg_orange"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/white"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_password" />
+
+
+            <TextView
+                android:layout_width="161dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                android:textColor="@color/greyDarker"
+                android:text="Password"
+                android:textSize="15dp" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_gravity="right"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="#38A746"
+                android:textSize="12dp" />
+
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:background="@drawable/bg_blue"
+                android:layout_gravity="center_vertical"
+                android:tint="@color/white"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_link" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLinkedDevice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:paddingLeft="10dp"
+                android:textAllCaps="false"
+                android:textColor="@color/greyLight"
+                android:textAlignment="textStart"
+                android:text="Linked Device"/>
+
+        </GridLayout>
+
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnMenuLogOut"

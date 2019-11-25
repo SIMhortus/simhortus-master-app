@@ -120,7 +120,7 @@ public class UpdatePassword extends AppCompatDialogFragment {
                                         });
                         }
                     }
-                    //else dialog stays open. Make sure you have an obvious way to close the dialog especially if you set cancellable to false.
+
                 }
             });
         }

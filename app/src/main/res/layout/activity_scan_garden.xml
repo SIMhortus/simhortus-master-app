@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".ScanGarden">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="212dp"
+        android:layout_height="201dp"
+        android:padding="0dp"
+        app:srcCompat="@drawable/ic_scan" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scan"
+        android:layout_gravity="center"
+        android:textColor="#219954"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="12dp"
+        android:background="@color/transparent"
+        android:text="Scan" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please scan your device to get started..."
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        />
+
+</LinearLayout>
+
