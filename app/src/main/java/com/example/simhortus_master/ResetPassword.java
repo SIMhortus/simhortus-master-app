@@ -9,6 +9,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -22,8 +24,10 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
 
     Button button;
     EditText editText;
+    ImageButton imageButton;
     private AwesomeValidation awesomeValidation;
     FirebaseAuth mAuth;
+    public static TextView toolbarText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,8 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
 
         button = findViewById(R.id.btnResetPass);
         editText = findViewById(R.id.resetEmail);
+        imageButton = findViewById(R.id.btnBack);
+        toolbarText = findViewById(R.id.toolbarText);
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
@@ -39,6 +45,8 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
         awesomeValidation.addValidation(this, R.id.resetEmail, Patterns.EMAIL_ADDRESS, R.string.email);
 
         button.setOnClickListener(this);
+        imageButton.setOnClickListener(this);
+        toolbarText.setText("Reset Password");
     }
 
     public void resetPassword() {
@@ -51,7 +59,7 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(ResetPassword.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent (ResetPassword.this, MainActivity.class));
+                            startActivity(new Intent (ResetPassword.this, AccountSettings.class));
                         } else {
                             Toast.makeText(ResetPassword.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
                         }
@@ -71,8 +79,19 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v == button) {
-            submitForm();
+
+        switch (v.getId()){
+            case R.id.btnResetPass:
+
+                submitForm();
+
+                break;
+            case R.id.btnBack:
+
+                startActivity(new Intent(this, Login.class));
+
+                break;
+
         }
     }
 }

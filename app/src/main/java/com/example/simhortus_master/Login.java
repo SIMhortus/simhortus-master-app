@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonL;
     private EditText email, password;
@@ -54,29 +55,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mAuth.signInWithEmailAndPassword(lEmail, lPassword)
-                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Intent intent = new Intent(MainActivity.this, AccountSettings.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
 
+                            Intent intent = new Intent(Login.this, AccountSettings.class);
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+
+                            Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                });
     }
 
     private void submitForm() {
-        //first validate the form then move ahead
-        //if this becomes true that means validation is successful
+
         if (awesomeValidation.validate()) {
             userLogin();
         }
     }
-
 
     public void goToReg(View v){
         startActivity(new Intent(this, Registration.class));
@@ -92,5 +94,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             submitForm();
         }
     }
-
 }

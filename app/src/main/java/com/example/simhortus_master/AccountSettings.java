@@ -24,8 +24,7 @@ public class AccountSettings extends AppCompatActivity {
 
     TextView textView;
     private FirebaseAuth mAuth;
-    Button button;
-
+    private Button btnLogout, btnEmail, btnPass;
     private AwesomeValidation awesomeValidation;
 
     @Override
@@ -34,19 +33,37 @@ public class AccountSettings extends AppCompatActivity {
         setContentView(R.layout.activity_account_settings);
 
         textView = findViewById(R.id.textViewVerified);
-        button = findViewById(R.id.logout);
+        btnLogout = findViewById(R.id.logout);
+        btnPass = findViewById(R.id.updPass);
         mAuth = FirebaseAuth.getInstance();
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.getInstance().signOut();
-                startActivity(new Intent(AccountSettings.this, MainActivity.class));
+                startActivity(new Intent(AccountSettings.this, Login.class));
             }
         });
 
+
+
+        //UPDATE PASSWORD
+        btnPass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openDialogUpdPass();
+            }
+        });
+
+
+    }
+
+    public void openDialogUpdPass(){
+
+        UpdatePassword updatePassword = new UpdatePassword();
+        updatePassword.show(getSupportFragmentManager(), "Change Password");
 
     }
 
@@ -57,13 +74,15 @@ public class AccountSettings extends AppCompatActivity {
 
 
         if (user == null) {
-            startActivity(new Intent(AccountSettings.this, MainActivity.class));
+            startActivity(new Intent(AccountSettings.this, Login.class));
 
         } else if (user.isEmailVerified()) {
 
             textView.setText("Email  verified");
+
         } else {
             String userName = user.getEmail();
+
             textView.setText("Email not verified (Click to verify) "+userName);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override

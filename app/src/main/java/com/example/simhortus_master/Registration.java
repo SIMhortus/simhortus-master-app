@@ -25,7 +25,6 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
     private EditText fName, lName, email, password;
     private Button button;
 
-    //paano ko ba tong gagawin dynamic? pauliulit ko siyang ginamit
     private FirebaseAuth mAuth;
 
     private AwesomeValidation awesomeValidation;

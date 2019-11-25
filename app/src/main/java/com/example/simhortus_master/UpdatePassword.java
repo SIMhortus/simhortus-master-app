@@ -27,6 +27,7 @@ public class UpdatePassword extends AppCompatDialogFragment {
     private EditText edtCurrentPassword, edtNewPassword, edtConfirmNewPassword;
 
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
