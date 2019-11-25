@@ -54,7 +54,7 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
     }
 
     public void goToLogIn(View v){
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, Login.class));
     }
 
     @Override
@@ -108,8 +108,6 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
                     }
                 }
             });
-
-            //process the data further
         }
     }
 
