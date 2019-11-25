@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -70,7 +71,7 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
 
     private void submitForm() {
         //first validate the form then move ahead
-        //if this becomes true that means validation is successfull
+        //if this becomes true that means validation is successful
         if (awesomeValidation.validate()) {
 
 

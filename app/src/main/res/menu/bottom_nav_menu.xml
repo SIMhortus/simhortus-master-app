@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Dashboard"
+        android:id="@+id/dashboard"
+        android:icon="@drawable/ic_dashboard" />
+    <item android:title="Herbs"
+        android:id="@+id/herbs"
+        android:icon="@drawable/ic_herbs" />
+    <item android:title="Notifications"
+        android:id="@+id/notifications"
+        android:icon="@drawable/ic_notification" />
+    <item android:title="Menu"
+        android:id="@+id/menu"
+        android:icon="@drawable/ic_menu" />
+</menu>

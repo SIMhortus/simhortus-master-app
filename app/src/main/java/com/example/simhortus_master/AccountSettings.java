@@ -26,6 +26,7 @@ public class AccountSettings extends AppCompatActivity {
     private Button btnLogout, btnEmail, btnPass;
     private AwesomeValidation awesomeValidation;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,6 @@ public class AccountSettings extends AppCompatActivity {
                 startActivity(new Intent(AccountSettings.this, Login.class));
             }
         });
-
 
         //UPDATE PASSWORD
         btnPass.setOnClickListener(new View.OnClickListener(){
