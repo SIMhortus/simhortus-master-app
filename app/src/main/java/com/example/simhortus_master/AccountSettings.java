@@ -24,7 +24,7 @@ public class AccountSettings extends AppCompatActivity {
 
     TextView textView;
     private FirebaseAuth mAuth;
-    Button button;
+    Button button, btn_updPass;
 
     private AwesomeValidation awesomeValidation;
 
@@ -35,10 +35,20 @@ public class AccountSettings extends AppCompatActivity {
 
         textView = findViewById(R.id.textViewVerified);
         button = findViewById(R.id.logout);
+        btn_updPass = findViewById(R.id.updPass);
         mAuth = FirebaseAuth.getInstance();
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
 
+        //UPDATE PASSWORD
+        btn_updPass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openDialogUpdPass();
+            }
+        });
+
+        //LOG OUT
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,8 +56,11 @@ public class AccountSettings extends AppCompatActivity {
                 startActivity(new Intent(AccountSettings.this, MainActivity.class));
             }
         });
+    }
 
-
+    public void openDialogUpdPass(){
+        UpdatePassword updatePassword = new UpdatePassword();
+        updatePassword.show(getSupportFragmentManager(), "Change Password");
     }
 
     protected void onStart() {
