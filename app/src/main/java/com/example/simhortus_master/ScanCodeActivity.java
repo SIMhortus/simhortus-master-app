@@ -3,11 +3,14 @@ package com.example.simhortus_master;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -41,14 +44,22 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
     public void handleResult(Result result) {
         final String dID = result.getText();
 
-
-        DatabaseReference rootRef = mAuth.getReference();
+        DatabaseReference rootRef = mAuth.getReference("Garden");
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild("name")) {
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(dID)) {
                     // run some code
+                    Toast.makeText(ScanCodeActivity.this, "sana ol gumagana", Toast.LENGTH_LONG).show();
+                }  else {
+                    Toast.makeText(ScanCodeActivity.this, "haysssssss", Toast.LENGTH_LONG).show();
                 }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
