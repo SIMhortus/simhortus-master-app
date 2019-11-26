@@ -2,10 +2,16 @@ package com.example.simhortus_master;
 
 public class UserInfo {
 
-    public String fName, lName;
+    private String first_name, last_name, deviceID;
 
-    public UserInfo(String firstName, String lastName) {
-        this.fName = firstName;
-        this.lName = lastName;
+    /****
+     *
+     * @param first_name: for first name
+     * @param last_name: for last name
+     */
+    public UserInfo(String first_name, String last_name) {
+        this.first_name = first_name;
+        this.last_name = last_name;
     }
+
 }

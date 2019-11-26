@@ -97,7 +97,7 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(Registration.this, "Validation Successfull", Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(Registration.this, MainActivity.class));
                                 } else {
                                     Toast.makeText(Registration.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }

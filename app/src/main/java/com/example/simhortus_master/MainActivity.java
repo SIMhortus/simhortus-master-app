@@ -33,14 +33,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     protected void onStart() {
         super.onStart();
 
         final FirebaseUser user = mAuth.getCurrentUser();
 
-
         if (user == null) {
             startActivity(new Intent(MainActivity.this, Login.class));
+
+        } else {
 
         }
 
