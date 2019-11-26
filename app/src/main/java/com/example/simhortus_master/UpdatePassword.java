@@ -26,8 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class UpdatePassword extends AppCompatDialogFragment {
     private EditText edtCurrentPassword, edtNewPassword, edtConfirmNewPassword;
 
-
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -36,12 +34,16 @@ public class UpdatePassword extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_update_password, null);
 
-        builder.setView(view).setTitle("Change Password").setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        builder.setView(view).setTitle("Update Password")
+
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
-        }).setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+        })
+
+                .setPositiveButton("confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }

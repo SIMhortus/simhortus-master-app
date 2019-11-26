@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MenuFragment extends Fragment {
 
 
-    Button btnLogout, btnPass, btnLinked;
+    Button btnLogout, btnEmail, btnPass, btnLinked;
     FirebaseAuth mAuth;
 
 
@@ -28,6 +28,7 @@ public class MenuFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
 
         btnLogout = rootView.findViewById(R.id.btnMenuLogOut);
+        btnEmail = rootView.findViewById(R.id.btnEmail);
         btnPass = rootView.findViewById(R.id.btnPass);
         btnLinked = rootView.findViewById(R.id.btnLinkedDevice);
 
@@ -38,6 +39,13 @@ public class MenuFragment extends Fragment {
                 mAuth.getInstance().signOut();
                 startActivity(new Intent(getContext(), Login.class));
 
+            }
+        });
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateEmail();
             }
         });
 
@@ -55,14 +63,17 @@ public class MenuFragment extends Fragment {
             }
         });
 
-
-
         return rootView;
+    }
+
+    public void updateEmail() {
+        UpdateEmail updateEmail = new UpdateEmail();
+        updateEmail.show(getFragmentManager(), "Update email");
     }
 
     public void updatePass() {
         UpdatePassword updatePassword = new UpdatePassword();
-        updatePassword.show(getFragmentManager(), "Change password");
+        updatePassword.show(getFragmentManager(), "Update password");
     }
 
     public void goToScanActivity(){
