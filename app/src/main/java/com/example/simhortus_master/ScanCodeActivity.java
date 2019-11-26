@@ -16,7 +16,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     ZXingScannerView ScannerView;
-    private FirebaseAuth mAuth;
+    private FirebaseDatabase mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,7 +24,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
         ScannerView = new ZXingScannerView(this);
         setContentView(ScannerView);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseDatabase.getInstance();
 
         this.requestPermissions(new String[]{Manifest.permission.CAMERA}, 1011);
     }
@@ -42,7 +42,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
         final String dID = result.getText();
 
 
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference rootRef = mAuth.getReference();
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             void onDataChange(DataSnapshot snapshot) {
