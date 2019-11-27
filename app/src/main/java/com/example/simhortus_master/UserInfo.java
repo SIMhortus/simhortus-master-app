@@ -2,7 +2,7 @@ package com.example.simhortus_master;
 
 public class UserInfo {
 
-    private String first_name, last_name;
+    public String first_name, last_name;
 
     /****
      *

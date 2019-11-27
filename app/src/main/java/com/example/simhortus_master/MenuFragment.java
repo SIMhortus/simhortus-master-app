@@ -57,28 +57,28 @@ public class MenuFragment extends Fragment {
 
 
         //getting data
-        reference.child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String firstName = dataSnapshot.child("fName").getValue(String.class);
-                String lastName = dataSnapshot.child("lName").getValue(String.class);
-                String phone = dataSnapshot.child("phone").getValue(String.class);
-                txtDispName.setText(firstName + " " + lastName);
-                if(phone.equals("")){
-                    txtPhone.setText("No phone number");
-                    btnContact.setText("Add");
-                }
-                else{
-                    txtPhone.setText(phone);
-                    btnContact.setText("Edit");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        reference.child(uid).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String firstName = dataSnapshot.child("fName").getValue(String.class);
+//                String lastName = dataSnapshot.child("lName").getValue(String.class);
+//                String phone = dataSnapshot.child("phone").getValue(String.class);
+//                txtDispName.setText(firstName + " " + lastName);
+//                if(phone.equals("")){
+//                    txtPhone.setText("No phone number");
+//                    btnContact.setText("Add");
+//                }
+//                else{
+//                    txtPhone.setText(phone);
+//                    btnContact.setText("Edit");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
