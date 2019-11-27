@@ -21,9 +21,15 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UpdateEmail extends AppCompatDialogFragment {
+
     private EditText edtNewEmail, edtEmailPassword;
+    String email;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserID");
 
     @NonNull
     @Override
@@ -50,6 +56,12 @@ public class UpdateEmail extends AppCompatDialogFragment {
 
         edtNewEmail = view.findViewById(R.id.newEmail);
         edtEmailPassword = view.findViewById(R.id.emailPassword);
+
+        //getting email
+        if (user != null) {
+            email = user.getEmail();
+            edtNewEmail.setText(email);
+        }
 
         return builder.create();
     }
@@ -78,6 +90,9 @@ public class UpdateEmail extends AppCompatDialogFragment {
                     else if(TextUtils.isEmpty(edtNewEmail.getText()))
                     {
                         edtNewEmail.setError( "New email is required!" );
+                    }
+                    else if(newEmail.equals(email)){
+                        Toast.makeText(getActivity(), "Current and new email are the same!", Toast.LENGTH_SHORT).show();
                     }
                     else{
                         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
