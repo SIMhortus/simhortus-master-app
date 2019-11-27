@@ -28,8 +28,6 @@ public class UpdateEmail extends AppCompatDialogFragment {
 
     private EditText edtNewEmail, edtEmailPassword;
     String email;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserID");
 
     @NonNull
     @Override
@@ -47,7 +45,6 @@ public class UpdateEmail extends AppCompatDialogFragment {
 
             }
         })
-
                 .setPositiveButton("confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -58,8 +55,8 @@ public class UpdateEmail extends AppCompatDialogFragment {
         edtEmailPassword = view.findViewById(R.id.emailPassword);
 
         //getting email
-        if (user != null) {
-            email = user.getEmail();
+        if (Global.getmAuth != null) {
+            email = Global.getmAuth.getEmail();
             edtNewEmail.setText(email);
         }
 

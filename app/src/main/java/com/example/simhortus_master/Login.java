@@ -26,7 +26,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText email, password;
 
     private AwesomeValidation awesomeValidation;
-    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
-        mAuth = FirebaseAuth.getInstance();
+        Global.mAuth = FirebaseAuth.getInstance();
         awesomeValidation.addValidation(this, R.id.lEmail, Patterns.EMAIL_ADDRESS, R.string.email);
 
         buttonL.setOnClickListener(this);
@@ -51,11 +50,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         String lEmail = email.getText().toString().trim();
         final String lPassword = password.getText().toString().trim();
 
-
-        mAuth.signInWithEmailAndPassword(lEmail, lPassword)
+        Global.mAuth.signInWithEmailAndPassword(lEmail, lPassword)
                 .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (task.isSuccessful()){
 
                             Intent intent = new Intent(Login.this, MainActivity.class);
@@ -96,7 +95,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     protected void onStart() {
         super.onStart();
 
-        final FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = Global.mAuth.getCurrentUser();
 
         if (user != null) {
             startActivity(new Intent(Login.this, MainActivity.class));

@@ -29,11 +29,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UpdateDisplayName extends AppCompatDialogFragment {
 
-    private EditText edtNewFirstName, edtNewLastName;
+    public EditText edtNewFirstName, edtNewLastName;
 
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserID");
-    String uid, firstName, lastName;
+    public String uid, firstName, lastName;
+
+    public UpdateDisplayName() {
+    }
 
     @NonNull
     @Override
@@ -62,16 +63,18 @@ public class UpdateDisplayName extends AppCompatDialogFragment {
         edtNewLastName = view.findViewById(R.id.newLastName);
 
         //getting userID
-        if (user != null) {
-            uid = user.getUid();
+        if (Global.getmAuth != null) {
+            uid = Global.getmAuth.getUid();
         }
 
         //getting firstname and lastname
-        reference.child(uid).addValueEventListener(new ValueEventListener() {
+
+        Global.getRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                firstName = dataSnapshot.child("fName").getValue(String.class);
-                lastName = dataSnapshot.child("lName").getValue(String.class);
+
+                firstName = dataSnapshot.child("first_name").getValue(String.class);
+                lastName = dataSnapshot.child("last_name").getValue(String.class);
                 edtNewFirstName.setText(firstName);
                 edtNewLastName.setText(lastName);
             }
@@ -102,6 +105,7 @@ public class UpdateDisplayName extends AppCompatDialogFragment {
                     //Do stuff, possibly set wantToCloseDialog to true then...
                     String newFirstName = edtNewFirstName.getText().toString();
                     String newLastName = edtNewLastName.getText().toString();
+
                     if(TextUtils.isEmpty(edtNewFirstName.getText()))
                     {
                         edtNewFirstName.setError( "First Name is required!" );
@@ -116,8 +120,14 @@ public class UpdateDisplayName extends AppCompatDialogFragment {
                         }
                         else {
                             try {
-                                reference.child(uid).child("fName").setValue(newFirstName);
-                                reference.child(uid).child("lName").setValue(newLastName);
+
+                                UserInfo userInfo = new UserInfo(
+                                        newFirstName,
+                                        newLastName
+                                );
+
+                                Global.getRef.child(uid).setValue(userInfo);
+
                                 Toast.makeText(getActivity(), "Display name is updated.", Toast.LENGTH_LONG).show();
                                 dismiss();
                             } catch (Exception e) {
@@ -130,4 +140,7 @@ public class UpdateDisplayName extends AppCompatDialogFragment {
             });
         }
     }
+
 }
+
+

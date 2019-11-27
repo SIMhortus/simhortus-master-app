@@ -20,6 +20,4 @@ public class GardenFragment extends Fragment {
         return rootView;
 
     }
-
-
 }

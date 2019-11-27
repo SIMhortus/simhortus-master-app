@@ -74,11 +74,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
             }
         });
 
-        //ScanGarden.resultTextView.setText(result.getText());
-        // put your code here
-
-
-
     }
 
 

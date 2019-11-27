@@ -26,10 +26,6 @@ public class MenuFragment extends Fragment {
     Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLinked;
     TextView txtEmail, txtDispName, txtPhone;
     String uid;
-    FirebaseAuth mAuth;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserID");
-
 
     @Nullable
     @Override
@@ -49,21 +45,24 @@ public class MenuFragment extends Fragment {
         txtPhone = rootView.findViewById(R.id.txtPhone);
 
         //getting email
-        if (user != null) {
-            String email = user.getEmail();
+        if (Global.user != null) {
+            String email = Global.user.getEmail();
             txtEmail.setText(email);
-            uid = user.getUid();
+            uid = Global.user.getUid();
         }
 
 
         //getting data
-//        reference.child(uid).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String firstName = dataSnapshot.child("fName").getValue(String.class);
-//                String lastName = dataSnapshot.child("lName").getValue(String.class);
-//                String phone = dataSnapshot.child("phone").getValue(String.class);
-//                txtDispName.setText(firstName + " " + lastName);
+        Global.getRef.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String firstName = dataSnapshot.child("first_name").getValue(String.class);
+                String lastName = dataSnapshot.child("last_name").getValue(String.class);
+
+                txtDispName.setText(firstName + " " + lastName);
+
+
 //                if(phone.equals("")){
 //                    txtPhone.setText("No phone number");
 //                    btnContact.setText("Add");
@@ -72,21 +71,20 @@ public class MenuFragment extends Fragment {
 //                    txtPhone.setText(phone);
 //                    btnContact.setText("Edit");
 //                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //repeated
-                mAuth.getInstance().signOut();
+                Global.mAuth.getInstance().signOut();
                 startActivity(new Intent(getContext(), Login.class));
-
             }
         });
 

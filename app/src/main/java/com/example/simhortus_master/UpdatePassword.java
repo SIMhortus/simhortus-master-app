@@ -59,7 +59,10 @@ public class UpdatePassword extends AppCompatDialogFragment {
     @Override
     public void onStart()
     {
-        super.onStart();    //super.onStart() is where dialog.show() is actually called on the underlying dialog, so we have to do it after this point
+        super.onStart();
+
+        //super.onStart() is where dialog.show() is actually called on the underlying dialog, so we have to do it after this point
+
         AlertDialog d = (AlertDialog)getDialog();
         if(d != null)
         {
@@ -91,7 +94,7 @@ public class UpdatePassword extends AppCompatDialogFragment {
                             Toast.makeText(getActivity(), "New password do not match!", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                final FirebaseUser user = Global.getmAuth;
                                 // Get auth credentials from the user for re-authentication. The example below shows
                                 // email and password credentials but there are multiple possible providers,
                                 // such as GoogleAuthProvider or FacebookAuthProvider.
@@ -109,7 +112,8 @@ public class UpdatePassword extends AppCompatDialogFragment {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     if (task.isSuccessful()) {
-                                                                        Toast.makeText(getActivity(), "Password is updated!", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(getActivity(),
+                                                                                "Password is updated!", Toast.LENGTH_SHORT).show();
                                                                         dismiss();
                                                                     }
                                                                 }

@@ -18,7 +18,7 @@ public class ScanGarden extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_garden);
 
-        scan_btn = (Button) findViewById(R.id.btn_scan);
+        scan_btn = findViewById(R.id.btn_scan);
 
         scan_btn.setOnClickListener(new View.OnClickListener() {
             @Override

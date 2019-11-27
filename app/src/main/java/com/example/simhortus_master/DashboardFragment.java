@@ -18,8 +18,5 @@ public class DashboardFragment extends Fragment {
 
 
         return rootView;
-
     }
-
-
 }
