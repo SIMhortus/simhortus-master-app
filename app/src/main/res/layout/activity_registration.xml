@@ -67,6 +67,41 @@
                    android:inputType="text" />
            </com.google.android.material.textfield.TextInputLayout>
 
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:weightSum="12"
+               android:orientation="horizontal"
+               android:gravity="center_vertical">
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="8dp"
+                   android:text="@string/phone_prefix"
+                   android:textSize="16dp"
+                   android:layout_weight="11">
+               </TextView>
+
+               <com.google.android.material.textfield.TextInputLayout
+                   android:id="@+id/layoutPhone"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="Phone Number (optional)"
+                   android:orientation="horizontal"
+                   android:layout_weight="1">
+
+                   <EditText
+                       android:id="@+id/phone"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:background="#FFFFFF"
+                       android:digits="0123456789"
+                       android:inputType="phone" />
+               </com.google.android.material.textfield.TextInputLayout>
+
+           </LinearLayout>
+
            <com.google.android.material.textfield.TextInputLayout
                android:id="@+id/layoutEmail"
                android:layout_width="match_parent"

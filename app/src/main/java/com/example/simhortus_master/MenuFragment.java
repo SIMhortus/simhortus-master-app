@@ -23,8 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuFragment extends Fragment {
 
 
-    Button btnLogout, btnDispName, btnEmail, btnPass, btnLinked;
-    TextView txtEmail, txtDispName;
+    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLinked;
+    TextView txtEmail, txtDispName, txtPhone;
     String uid;
     FirebaseAuth mAuth;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -39,12 +39,14 @@ public class MenuFragment extends Fragment {
 
         btnLogout = rootView.findViewById(R.id.btnMenuLogOut);
         btnDispName = rootView.findViewById(R.id.btn_disp_name);
+        btnContact = rootView.findViewById(R.id.btnContact);
         btnEmail = rootView.findViewById(R.id.btnEmail);
         btnPass = rootView.findViewById(R.id.btnPass);
         btnLinked = rootView.findViewById(R.id.btnLinkedDevice);
 
         txtEmail = rootView.findViewById(R.id.txtEmail);
         txtDispName = rootView.findViewById(R.id.txtDispName);
+        txtPhone = rootView.findViewById(R.id.txtPhone);
 
         //getting email
         if (user != null) {
@@ -60,7 +62,16 @@ public class MenuFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String firstName = dataSnapshot.child("fName").getValue(String.class);
                 String lastName = dataSnapshot.child("lName").getValue(String.class);
+                String phone = dataSnapshot.child("phone").getValue(String.class);
                 txtDispName.setText(firstName + " " + lastName);
+                if(phone.equals("")){
+                    txtPhone.setText("No phone number");
+                    btnContact.setText("Add");
+                }
+                else{
+                    txtPhone.setText(phone);
+                    btnContact.setText("Edit");
+                }
             }
 
             @Override

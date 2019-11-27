@@ -4,6 +4,7 @@
     <string name="lName">Enter a valid last name</string>
     <string name="email">Enter a valid email</string>
     <string name="password">password is too short</string>
+    <string name="phone_prefix">+63</string>
     <string name="retype_password">For security purposes, please type in your password below.</string>
 
 </resources>
