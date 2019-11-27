@@ -63,7 +63,7 @@ public class ResetPassword extends AppCompatActivity implements View.OnClickList
                                     "We have sent you instructions to reset your password!",
                                     Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent (ResetPassword.this, AccountSettings.class));
+                            startActivity(new Intent (ResetPassword.this, Login.class));
 
                         } else {
                             Toast.makeText(ResetPassword.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();

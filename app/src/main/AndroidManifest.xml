@@ -19,7 +19,6 @@
         <activity android:name=".GardenFragment" />
         <activity android:name=".DashboardFragment" />
         <activity android:name=".ResetPassword"></activity>
-        <activity android:name=".AccountSettings" />
         <activity android:name=".Registration" />
         <activity android:name=".Login"></activity>
         <activity android:name=".MainActivity">
