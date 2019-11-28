@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -20,12 +22,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 public class MenuFragment extends Fragment {
 
 
     Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLinked;
     TextView txtEmail, txtDispName, txtPhone;
     String uid;
+
+    GridLayout layoutLink, layoutUnlink;
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth mAuth;
@@ -47,6 +52,10 @@ public class MenuFragment extends Fragment {
         txtDispName = rootView.findViewById(R.id.txtDispName);
         txtPhone = rootView.findViewById(R.id.txtPhone);
 
+        layoutLink = rootView.findViewById(R.id.layoutLink);
+        layoutUnlink = rootView.findViewById(R.id.layoutUnlink);
+
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -58,6 +67,8 @@ public class MenuFragment extends Fragment {
             txtEmail.setText(email);
             uid = user.getUid();
         }
+
+
 
 
         //getting data
@@ -146,4 +157,32 @@ public class MenuFragment extends Fragment {
         startActivity(new Intent(getContext(), ScanGarden.class));
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        DatabaseReference getRef = firebaseDatabase.getReference("Users");
+
+        getRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("deviceID")){
+                    layoutLink.setVisibility(View.GONE);
+                    layoutUnlink.setVisibility(View.VISIBLE);
+                } else {
+                    layoutLink.setVisibility(View.VISIBLE);
+                    layoutUnlink.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
 }

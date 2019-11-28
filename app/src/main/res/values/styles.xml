@@ -19,4 +19,12 @@
         <item name="android:padding" >10dp</item>
     </style>
 
+
+
+    <style name="DialogTheme" parent="MaterialAlertDialog.MaterialComponents.Title.Icon.CenterStacked">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">#641111</item>
+        <item name="colorPrimaryDark">#FFF</item>
+        <item name="android:borderlessButtonStyle">@color/transparent</item>
+    </style>
 </resources>
