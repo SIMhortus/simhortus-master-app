@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="12"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/phone_prefix"
+            android:textSize="16dp"
+            android:layout_weight="10">
+        </TextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter phone number"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+
+            <EditText
+                android:id="@+id/newPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:digits="0123456789"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnVerificationCode"
+        style="@style/PrimaryFlatButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="15dp"
+        android:text="GET VERIFICATION CODE"
+        app:elevation="10dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Enter code received">
+
+        <EditText
+            android:background="@color/transparent"
+            android:id="@+id/codePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="2">-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:id="@+id/btnPhoneCancel"-->
+<!--            style="@style/PrimaryFlatButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingVertical="15dp"-->
+<!--            android:text="CANCEL"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginRight="5dp"-->
+<!--            app:elevation="10dp" />-->
+
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:id="@+id/btnPhoneSubmit"-->
+<!--            style="@style/PrimaryFlatButton"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingVertical="15dp"-->
+<!--            android:text="SUBMIT"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            app:elevation="10dp" />-->
+
+<!--    </LinearLayout>-->
+
+</LinearLayout>

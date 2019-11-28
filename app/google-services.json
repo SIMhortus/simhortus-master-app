@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1085939297141-gfhsid9v7b3b50t5p0tj7vllv8shht2u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.simhortus_master",
+            "certificate_hash": "28203825bd008e27131f04c0c51b63253bb4b8ad"
+          }
+        },
+        {
           "client_id": "1085939297141-1lsviodeepaj0344urjb2803e294tgmf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

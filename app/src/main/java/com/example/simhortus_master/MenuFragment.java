@@ -67,18 +67,18 @@ public class MenuFragment extends Fragment {
 
                 String firstName = dataSnapshot.child("first_name").getValue(String.class);
                 String lastName = dataSnapshot.child("last_name").getValue(String.class);
+                String phone = dataSnapshot.child("phone_number").getValue(String.class);
 
                 txtDispName.setText(firstName + " " + lastName);
 
-
-//                if(phone.equals("")){
-//                    txtPhone.setText("No phone number");
-//                    btnContact.setText("Add");
-//                }
-//                else{
-//                    txtPhone.setText(phone);
-//                    btnContact.setText("Edit");
-//                }
+                if(phone.equals("")){
+                    txtPhone.setText("No phone number");
+                    btnContact.setText("Add");
+                }
+                else{
+                    txtPhone.setText(phone);
+                    btnContact.setText("Edit");
+                }
             }
 
             @Override
@@ -100,6 +100,13 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 updateDisplayName();
+            }
+        });
+
+        btnContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateContact();
             }
         });
 
@@ -130,6 +137,11 @@ public class MenuFragment extends Fragment {
     public void updateDisplayName() {
         UpdateDisplayName updateDisplayName = new UpdateDisplayName();
         updateDisplayName.show(getFragmentManager(), "Update display name");
+    }
+
+    public void updateContact() {
+        UpdateContact updateContact = new UpdateContact();
+        updateContact.show(getFragmentManager(), "Update contact");
     }
 
     public void updateEmail() {
