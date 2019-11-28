@@ -7,11 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-public class GardenFragment extends Fragment {
-
-    private static FragmentManager fragmentManager;
+public class EmptyFragment extends Fragment {
 
     @Nullable
     @Override
@@ -20,10 +17,6 @@ public class GardenFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.empty_data, container, false);
 
 
-
         return rootView;
-
     }
-
-
 }

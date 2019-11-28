@@ -15,7 +15,7 @@ public class Global {
     public static FirebaseDatabase ref = FirebaseDatabase.getInstance();
     public static FirebaseAuth mAuthInstance = mAuth.getInstance();
     public static FirebaseUser getmAuth = mAuthInstance.getCurrentUser();
-    public static DatabaseReference getRef = ref.getReference("UserID");
+    public static DatabaseReference getRef = ref.getReference("Users");
 
 
     public static void showToast(String msg, Context ctx) {

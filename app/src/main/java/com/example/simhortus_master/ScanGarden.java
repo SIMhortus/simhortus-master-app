@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class ScanGarden extends AppCompatActivity {
     public static EditText resultTextView;
     Button scan_btn;
@@ -28,6 +30,16 @@ public class ScanGarden extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected void onStart() {
+        super.onStart();
+
+        final FirebaseUser user = Global.mAuthInstance.getCurrentUser();
+
+        if (user == null) {
+            startActivity(new Intent(ScanGarden.this, Login.class));
+        }
     }
 
 }

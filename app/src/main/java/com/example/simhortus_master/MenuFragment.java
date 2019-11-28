@@ -53,7 +53,7 @@ public class MenuFragment extends Fragment {
 
 
         //getting data
-        Global.getRef.child(uid).addValueEventListener(new ValueEventListener() {
+        Global.ref.getReference("Users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -83,7 +83,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //repeated
-                Global.mAuth.getInstance().signOut();
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getContext(), Login.class));
             }
         });

@@ -87,7 +87,7 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
                           lastName
                         );
 
-                        Global.getRef.child(Global.getmAuth.getUid())
+                        Global.getRef.child(Global.mAuthInstance.getCurrentUser().getUid())
                                 .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

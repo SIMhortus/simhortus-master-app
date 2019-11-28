@@ -1,5 +1,6 @@
 package com.example.simhortus_master;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,9 +13,13 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
+    Boolean isValid = true;
     private static FragmentManager fragmentManager;
 
     @Override
@@ -36,7 +41,24 @@ public class MainActivity extends AppCompatActivity {
 
         if (user == null) {
             startActivity(new Intent(MainActivity.this, Login.class));
+        } else {
+
         }
+    }
+
+    public Boolean replaceLayout() {
+
+        Global.getRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild("deviceID")) isValid = false;
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        return isValid;
     }
 
 
@@ -48,13 +70,27 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()){
                         case R.id.dashboard:
-                            selectedFragment = new DashboardFragment();
+                            if (replaceLayout() == true) {
+                                selectedFragment = new EmptyFragment();
+                            } else  {
+                                selectedFragment = new DashboardFragment();
+                            }
+
                             break;
                         case R.id.herbs:
-                            selectedFragment = new GardenFragment();
+                            if (replaceLayout() == true) {
+                                selectedFragment = new EmptyFragment();
+                            } else  {
+                                selectedFragment = new GardenFragment();
+                            }
+
                             break;
                         case R.id.notifications:
-                            selectedFragment = new NotificationsFragment();
+                            if (replaceLayout() == true) {
+                                selectedFragment = new EmptyFragment();
+                            } else  {
+                                selectedFragment = new NotificationsFragment();
+                            }
                             break;
                         case R.id.menu:
                             selectedFragment = new MenuFragment();
@@ -66,4 +102,9 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+
 }
+
+

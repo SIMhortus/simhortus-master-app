@@ -22,7 +22,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     ZXingScannerView ScannerView;
     private FirebaseDatabase firebaseDatabase;
-    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,39 +30,37 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
         setContentView(ScannerView);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        mAuth = FirebaseAuth.getInstance();
 
         this.requestPermissions(new String[]{Manifest.permission.CAMERA}, 1011);
     }
 
     public void onDestroy() {
         super.onDestroy();
-
         ScannerView = null;
-        ScannerView.stopCamera();
-
     }
+
+
 
     @Override
     public void handleResult(Result result) {
         final String dID = result.getText();
-        final String uID = mAuth.getUid();
+        final String uID = Global.getmAuth.getUid();
 
         final DatabaseReference rootRef = firebaseDatabase.getReference("Garden");
-        final DatabaseReference userRef = firebaseDatabase.getReference("UserID");
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.hasChild(dID)) {
 
-                    rootRef.child(dID).child("userID").setValue(uID);
-                    userRef.child(uID).child("deviceID").setValue(dID);
+//                    rootRef.child(dID).child("Users").setValue(uID);
+                    Global.getRef.child(uID).child("deviceID").setValue(dID);
 
-                    Toast.makeText(ScanCodeActivity.this, "Device connected!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ScanCodeActivity.this, "Device connected!" + uID, Toast.LENGTH_LONG).show();
                     startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
 
                 }  else {
-                    Toast.makeText(ScanCodeActivity.this, "haysssssss" + dID, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ScanCodeActivity.this, "The scanned qr code is not registered in the database", Toast.LENGTH_LONG).show();
+                    onBackPressed();
                 }
 
             }
