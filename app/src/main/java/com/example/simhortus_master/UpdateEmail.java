@@ -29,6 +29,9 @@ public class UpdateEmail extends AppCompatDialogFragment {
     private EditText edtNewEmail, edtEmailPassword;
     String email;
 
+    FirebaseDatabase firebaseDatabase;
+    FirebaseAuth mAuth;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -54,9 +57,12 @@ public class UpdateEmail extends AppCompatDialogFragment {
         edtNewEmail = view.findViewById(R.id.newEmail);
         edtEmailPassword = view.findViewById(R.id.emailPassword);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
         //getting email
-        if (Global.getmAuth != null) {
-            email = Global.getmAuth.getEmail();
+        if (user != null) {
+            email = user.getEmail();
             edtNewEmail.setText(email);
         }
 

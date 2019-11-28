@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
@@ -25,6 +26,8 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
 
     private EditText fName, lName, email, password;
     private Button button;
+    FirebaseDatabase firebaseDatabase;
+    FirebaseAuth mAuth;
 
     private AwesomeValidation awesomeValidation;
 
@@ -37,6 +40,9 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
         lName = findViewById(R.id.lName);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
@@ -76,7 +82,10 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
             final String firstName = fName.getText().toString().trim();
             final String lastName = lName.getText().toString().trim();
 
-            Global.mAuthInstance.createUserWithEmailAndPassword(user_email, user_pass)
+
+            final DatabaseReference ref = firebaseDatabase.getReference("Users");
+
+            mAuth.createUserWithEmailAndPassword(user_email, user_pass)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -87,7 +96,8 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
                           lastName
                         );
 
-                        Global.getRef.child(Global.mAuthInstance.getCurrentUser().getUid())
+                        final String uID = mAuth.getCurrentUser().getUid();
+                        ref.child(uID)
                                 .setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

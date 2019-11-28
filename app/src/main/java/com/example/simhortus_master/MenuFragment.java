@@ -27,6 +27,9 @@ public class MenuFragment extends Fragment {
     TextView txtEmail, txtDispName, txtPhone;
     String uid;
 
+    FirebaseDatabase firebaseDatabase;
+    FirebaseAuth mAuth;
+
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,16 +47,21 @@ public class MenuFragment extends Fragment {
         txtDispName = rootView.findViewById(R.id.txtDispName);
         txtPhone = rootView.findViewById(R.id.txtPhone);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference getRef = firebaseDatabase.getReference("Users");
+
         //getting email
-        if (Global.user != null) {
-            String email = Global.user.getEmail();
+        if (user != null) {
+            String email = user.getEmail();
             txtEmail.setText(email);
-            uid = Global.user.getUid();
+            uid = user.getUid();
         }
 
 
         //getting data
-        Global.ref.getReference("Users").child(uid).addValueEventListener(new ValueEventListener() {
+        getRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

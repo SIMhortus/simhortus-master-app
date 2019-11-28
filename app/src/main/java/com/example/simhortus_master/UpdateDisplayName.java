@@ -33,6 +33,9 @@ public class UpdateDisplayName extends AppCompatDialogFragment {
 
     public String uid, firstName, lastName;
 
+    FirebaseDatabase firebaseDatabase;
+    FirebaseAuth mAuth;
+
     public UpdateDisplayName() {
     }
 
@@ -62,9 +65,12 @@ public class UpdateDisplayName extends AppCompatDialogFragment {
         edtNewFirstName = view.findViewById(R.id.newFirstName);
         edtNewLastName = view.findViewById(R.id.newLastName);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
         //getting userID
-        if (Global.getmAuth != null) {
-            uid = Global.getmAuth.getUid();
+        if (mAuth.getCurrentUser() != null) {
+            uid = mAuth.getCurrentUser().getUid();
         }
 
         //getting firstname and lastname
@@ -126,9 +132,10 @@ public class UpdateDisplayName extends AppCompatDialogFragment {
                                         newLastName
                                 );
 
-                                Global.getRef.child(uid).setValue(userInfo);
+                                firebaseDatabase.getReference("Users").child(uid).setValue(userInfo);
 
                                 Toast.makeText(getActivity(), "Display name is updated.", Toast.LENGTH_LONG).show();
+
                                 dismiss();
                             } catch (Exception e) {
                                 e.printStackTrace();
