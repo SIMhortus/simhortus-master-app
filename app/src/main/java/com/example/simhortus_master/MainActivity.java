@@ -12,15 +12,21 @@ import androidx.fragment.app.FragmentManager;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     Boolean isValid = true;
     private static FragmentManager fragmentManager;
+    FirebaseAuth mAuth;
+    FirebaseDatabase firebaseDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +38,32 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.clearAnimation();
 
+        mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+
     }
 
+    @Override
     protected void onStart() {
         super.onStart();
 
-        final FirebaseUser user = Global.mAuthInstance.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
 
         if (user == null) {
             startActivity(new Intent(MainActivity.this, Login.class));
-        } else {
+        } else  replaceLayout();
 
-        }
     }
 
     public Boolean replaceLayout() {
 
-        Global.getRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        final String uID = firebaseUser.getUid();
+
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Users").child(uID);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.hasChild("deviceID")) isValid = false;
@@ -70,8 +85,12 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()){
                         case R.id.dashboard:
+
+                            String bol = isValid.toString();
+
                             if (replaceLayout() == true) {
                                 selectedFragment = new EmptyFragment();
+                                Global.showToast(bol, MainActivity.this);
                             } else  {
                                 selectedFragment = new DashboardFragment();
                             }

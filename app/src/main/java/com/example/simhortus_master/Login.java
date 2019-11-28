@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +27,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText email, password;
 
     private AwesomeValidation awesomeValidation;
+    FirebaseAuth mAuth;
+    FirebaseDatabase firebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
-        Global.mAuth = FirebaseAuth.getInstance();
+        mAuth =  FirebaseAuth.getInstance();
         awesomeValidation.addValidation(this, R.id.lEmail, Patterns.EMAIL_ADDRESS, R.string.email);
 
         buttonL.setOnClickListener(this);
@@ -50,7 +53,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         String lEmail = email.getText().toString().trim();
         final String lPassword = password.getText().toString().trim();
 
-        Global.mAuth.signInWithEmailAndPassword(lEmail, lPassword)
+        mAuth.signInWithEmailAndPassword(lEmail, lPassword)
                 .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -95,7 +98,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     protected void onStart() {
         super.onStart();
 
-        final FirebaseUser user = Global.mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
             startActivity(new Intent(Login.this, MainActivity.class));

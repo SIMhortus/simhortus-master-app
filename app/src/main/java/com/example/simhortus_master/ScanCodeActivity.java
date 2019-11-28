@@ -22,16 +22,20 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     ZXingScannerView ScannerView;
     private FirebaseDatabase firebaseDatabase;
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        this.requestPermissions(new String[]{Manifest.permission.CAMERA}, 1011);
         ScannerView = new ZXingScannerView(this);
         setContentView(ScannerView);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-        this.requestPermissions(new String[]{Manifest.permission.CAMERA}, 1011);
+
     }
 
     public void onDestroy() {
@@ -44,18 +48,21 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
     @Override
     public void handleResult(Result result) {
         final String dID = result.getText();
-        final String uID = Global.getmAuth.getUid();
 
+        final DatabaseReference ref = firebaseDatabase.getReference("Users");
         final DatabaseReference rootRef = firebaseDatabase.getReference("Garden");
+        final FirebaseUser user = mAuth.getCurrentUser();
+        final String uID = user.getUid();
+
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.hasChild(dID)) {
 
-//                    rootRef.child(dID).child("Users").setValue(uID);
-                    Global.getRef.child(uID).child("deviceID").setValue(dID);
+                    rootRef.child(dID).child("Users").setValue(uID);
+                    ref.child(uID).child("deviceID").setValue(dID);
 
-                Toast.makeText(ScanCodeActivity.this, "Device connected!" + uID, Toast.LENGTH_LONG).show();
+                    Toast.makeText(ScanCodeActivity.this, "Device connected!" + dID, Toast.LENGTH_LONG).show();
                     startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
 
                 }  else {
