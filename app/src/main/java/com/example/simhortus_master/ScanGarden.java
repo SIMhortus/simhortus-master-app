@@ -33,8 +33,11 @@ public class ScanGarden extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ScanGarden.this, MainActivity.class));
     }
 
     protected void onStart() {

@@ -20,7 +20,6 @@
     </style>
 
 
-
     <style name="DialogTheme" parent="MaterialAlertDialog.MaterialComponents.Title.Icon.CenterStacked">
         <!-- Customize your theme here. -->
         <item name="colorAccent">#641111</item>

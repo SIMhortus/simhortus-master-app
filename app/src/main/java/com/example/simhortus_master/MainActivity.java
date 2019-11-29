@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +18,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,15 +36,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.clearAnimation();
 
+
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-
     }
 
     @Override
@@ -52,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (user == null) {
             startActivity(new Intent(MainActivity.this, Login.class));
-        } else  replaceLayout();
-
+        } else  {
+            loadLayout();
+        }
     }
 
     public Boolean replaceLayout() {
@@ -76,12 +78,39 @@ public class MainActivity extends AppCompatActivity {
         return isValid;
     }
 
+    public Boolean loadLayout() {
+
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        final String uID = firebaseUser.getUid();
+
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Users").child(uID);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("deviceID")) {
+                    Fragment  selectedFragment = new DashboardFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                } else {
+                    Fragment  selectedFragment = new EmptyFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return isValid;
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    Fragment selectedFragment = null;
+
+                    Fragment  selectedFragment = null;
 
                     switch (menuItem.getItemId()){
                         case R.id.dashboard:

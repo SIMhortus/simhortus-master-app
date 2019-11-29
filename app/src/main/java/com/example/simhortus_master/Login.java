@@ -45,21 +45,21 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         awesomeValidation.addValidation(this, R.id.lEmail, Patterns.EMAIL_ADDRESS, R.string.email);
 
         buttonL.setOnClickListener(this);
-
     }
 
     private void userLogin() {
 
         String lEmail = email.getText().toString().trim();
         final String lPassword = password.getText().toString().trim();
-
+        final LoadingScreen loadingScreen = new LoadingScreen();
+        loadingScreen.show(getSupportFragmentManager(), "Loading");
         mAuth.signInWithEmailAndPassword(lEmail, lPassword)
                 .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-
+                            loadingScreen.dismiss();
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                             finish();

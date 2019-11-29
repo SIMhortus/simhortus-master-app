@@ -98,7 +98,8 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
 
 
                 final DatabaseReference ref = firebaseDatabase.getReference("Users");
-
+                final LoadingScreen loadingScreen = new LoadingScreen();
+                loadingScreen.show(getSupportFragmentManager(), "Loading");
                 mAuth.createUserWithEmailAndPassword(user_email, user_pass)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -117,6 +118,7 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+                                                loadingScreen.dismiss();
                                                 startActivity(new Intent(Registration.this, MainActivity.class));
                                             } else {
                                                 Global.showToast(task.getException().getMessage(), Registration.this);

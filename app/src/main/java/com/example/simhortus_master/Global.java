@@ -21,4 +21,6 @@ public class Global {
     public static void showToast(String msg, Context ctx) {
         Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
     }
+
+
 }
