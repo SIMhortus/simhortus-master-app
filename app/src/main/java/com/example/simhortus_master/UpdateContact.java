@@ -19,7 +19,9 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
@@ -97,7 +99,12 @@ public class UpdateContact extends AppCompatDialogFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 phoneNumber = dataSnapshot.child("phone_number").getValue(String.class);
-                edtNewPhoneNumber.setText(phoneNumber.substring(3));
+                if(phoneNumber.equals("")){
+                    edtNewPhoneNumber.setText("");
+                }
+                else{
+                    edtNewPhoneNumber.setText(phoneNumber.substring(3));
+                }
             }
 
             @Override
@@ -148,12 +155,7 @@ public class UpdateContact extends AppCompatDialogFragment {
                         }
                         else {
                             try {
-                                //verifyCode();
-                                String newPhoneNumberAgain = "+63" + edtNewPhoneNumber.getText().toString();
-                                Toast.makeText(getActivity(), "Verification successful", Toast.LENGTH_SHORT).show();
-                                reference.child(uid).child("phone_number").setValue(newPhoneNumberAgain);
-                                Toast.makeText(getActivity(), "Phone number is updated.", Toast.LENGTH_LONG).show();
-                                dismiss();
+                                verifyCode();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -173,10 +175,8 @@ public class UpdateContact extends AppCompatDialogFragment {
         }
         else if (((isValid(edtNewPhoneNumber.getText().toString())) && (edtNewPhoneNumber.getText().toString().length() == 10))) {
             String newPhoneNumber = edtNewPhoneNumber.getText().toString();
-            if(newPhoneNumber.equals(phoneNumber.substring(3))){
-                Toast.makeText(getActivity(), "Please enter a new phone number", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            if(phoneNumber.equals("")){
+                Toast.makeText(getActivity(), "Linking +63" + edtNewPhoneNumber.getText().toString().trim(), Toast.LENGTH_SHORT).show();
                 String sendPhoneNumber = "+63" + edtNewPhoneNumber.getText().toString().trim();
 
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -186,21 +186,44 @@ public class UpdateContact extends AppCompatDialogFragment {
                         getActivity(),               // Activity (for callback binding)
                         mCallbacks);        // OnVerificationStateChangedCallbacks
             }
+            else{
+                if(newPhoneNumber.equals(phoneNumber.substring(3))){
+                    Toast.makeText(getActivity(), "Please enter a new phone number", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Unlinking +63" + phoneNumber.substring(3), Toast.LENGTH_SHORT).show();
+                    reference.child(uid).child("phone_number").setValue("");
+                    mAuth.getCurrentUser().unlink(PhoneAuthProvider.PROVIDER_ID);
+                    Toast.makeText(getActivity(), "Linking +63" + edtNewPhoneNumber.getText().toString().trim(), Toast.LENGTH_SHORT).show();
+                    String sendPhoneNumber = "+63" + edtNewPhoneNumber.getText().toString().trim();
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                            sendPhoneNumber,        // Phone number to verify
+                            60,                 // Timeout duration
+                            TimeUnit.SECONDS,   // Unit of timeout
+                            getActivity(),               // Activity (for callback binding)
+                            mCallbacks);        // OnVerificationStateChangedCallbacks
+                }
+            }
         }
         else{
             edtNewPhoneNumber.setError( "Please enter a valid phone number" );
         }
     }
 
+    //Submitting
+    private void verifyCode(){
+        String code = edtCodePhone.getText().toString();
+        Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
+        PhoneAuthCredential phoneCredential = PhoneAuthProvider.getCredential(codeSent, code);
+        linkWithPhoneAuthCredential(phoneCredential);
+    };
+
     //For mCallbacks
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-            String newPhoneNumber = "+63" + edtNewPhoneNumber.getText().toString();
-            Toast.makeText(getActivity(), "Verification successful", Toast.LENGTH_SHORT).show();
-            reference.child(uid).child("phone_number").setValue(newPhoneNumber);
-            Toast.makeText(getActivity(), "Phone number is updated.", Toast.LENGTH_LONG).show();
-            dismiss();
+            Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
+            linkWithPhoneAuthCredential(phoneAuthCredential);
         }
 
         @Override
@@ -214,20 +237,16 @@ public class UpdateContact extends AppCompatDialogFragment {
             Toast.makeText(getActivity(), "Sending code to " + sendPhoneNumber, Toast.LENGTH_SHORT).show();
             super.onCodeSent(s, forceResendingToken);
             codeSent = s;
+//            String code = edtCodePhone.getText().toString();
+//            Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
+//            PhoneAuthCredential phoneCredential = PhoneAuthProvider.getCredential(codeSent, code);
+//            linkWithPhoneAuthCredential(phoneCredential);
         }
     };
 
-    //submitting
-    private void verifyCode(){
-        Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
-        String code = edtCodePhone.getText().toString();
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, code);
-        signInWithPhoneAuthCredential(credential);
-    }
-
     //updating phone
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
+    private void linkWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.getCurrentUser().linkWithCredential(credential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
