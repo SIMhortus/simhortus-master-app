@@ -57,13 +57,31 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+
+
                 if (snapshot.hasChild(dID)) {
+                    long num = snapshot.child(dID).getChildrenCount();
+                    if (num < 7 ){
 
-                    rootRef.child(dID).child("Users").setValue(uID);
-                    ref.child(uID).child("deviceID").setValue(dID);
+                        if (num == 1) {
+                            rootRef.child(dID).child(uID).setValue("owner");
+                            ref.child(uID).child("garden_id").setValue(dID);
 
-                    Toast.makeText(ScanCodeActivity.this, "SIM hortus App linked successfully", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
+                            Toast.makeText(ScanCodeActivity.this, "SIM hortus App linked successfully" + num, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
+                        } else {
+                            rootRef.child(dID).child(uID).setValue("user");
+                            ref.child(uID).child("garden_id").setValue(dID);
+
+                            Toast.makeText(ScanCodeActivity.this, "SIM hortus App linked successfully" + num, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
+                        }
+
+                    } else {
+                        Global.showToast("Maximum account reached", ScanCodeActivity.this);
+                        onBackPressed();
+                    }
+
 
                 }  else {
                     Toast.makeText(ScanCodeActivity.this, "The scanned qr code is not registered in the database", Toast.LENGTH_LONG).show();

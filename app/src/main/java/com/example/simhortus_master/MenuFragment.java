@@ -1,9 +1,7 @@
 package com.example.simhortus_master;
 
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,10 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class MenuFragment extends Fragment {
 
@@ -192,7 +186,7 @@ public class MenuFragment extends Fragment {
         getRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("deviceID")){
+                if (dataSnapshot.hasChild("garden_id")){
                     layoutLink.setVisibility(View.GONE);
                     layoutUnlink.setVisibility(View.VISIBLE);
                 } else {
@@ -206,9 +200,6 @@ public class MenuFragment extends Fragment {
 
             }
         });
-
-
-
     }
 
     public void Reload() {
@@ -235,15 +226,33 @@ public class MenuFragment extends Fragment {
 
         FirebaseUser user = mAuth.getCurrentUser();
         final DatabaseReference getRef = firebaseDatabase.getReference("Users");
-
-        final String uID = user.getUid();
+        final DatabaseReference garRef = firebaseDatabase.getReference("Garden");
 
         final Dialog myDialog = new Dialog(getContext());
-        myDialog.setContentView(R.layout.custom_alert_dialog);
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        final TextView textView =  myDialog.findViewById(R.id.displayID);
 
-        myDialog.show();
+        myDialog.setContentView(R.layout.dialog_custom_alert);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        final TextView textView =  myDialog.findViewById(R.id.displayID);
+        final TextView hiddenText = myDialog.findViewById(R.id.hiddenText);
+
+
+        final DatabaseReference getID = getRef.child(uid).child("garden_id");
+        getID.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String id = dataSnapshot.getValue().toString();
+                textView.setText("Device ID: "+id);
+                hiddenText.setText(id);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         btnNeg = myDialog.findViewById(R.id.btnNeg);
         btnPos = myDialog.findViewById(R.id.btnPos);
@@ -258,28 +267,19 @@ public class MenuFragment extends Fragment {
         btnPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference remove = getRef.child(uID).child("deviceID");
+                DatabaseReference remove = getRef.child(uid).child("garden_id");
                 remove.setValue(null);
+
+                String gID = hiddenText.getText().toString();
+                garRef.child(gID).child(uid).setValue(null);
+
                 Global.showToast("Device disconnected", getContext());
                 Reload();
                 myDialog.dismiss();
             }
         });
 
-        final DatabaseReference getID = getRef.child(uID).child("deviceID");
-
-        getID.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final String id = dataSnapshot.getValue().toString();
-                textView.setText("Device ID: "+id);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        myDialog.show();
 
     }
 }
