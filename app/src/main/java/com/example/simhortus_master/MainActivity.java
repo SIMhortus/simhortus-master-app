@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChild("deviceID")) isValid = false;
+                    if (dataSnapshot.hasChild("garden_id")) isValid = false;
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("deviceID")) {
+                if (dataSnapshot.hasChild("garden_id")) {
                     Fragment  selectedFragment = new DashboardFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                 } else {

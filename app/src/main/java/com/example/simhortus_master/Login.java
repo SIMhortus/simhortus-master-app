@@ -59,11 +59,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-                            loadingScreen.dismiss();
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-
+                            loadingScreen.dismiss();
                         } else {
 
                             Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();

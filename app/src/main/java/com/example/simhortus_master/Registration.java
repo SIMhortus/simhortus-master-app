@@ -118,8 +118,8 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                loadingScreen.dismiss();
                                                 startActivity(new Intent(Registration.this, MainActivity.class));
+                                                loadingScreen.dismiss();
                                             } else {
                                                 Global.showToast(task.getException().getMessage(), Registration.this);
                                             }

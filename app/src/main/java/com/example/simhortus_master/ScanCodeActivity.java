@@ -43,8 +43,6 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
         ScannerView = null;
     }
 
-
-
     @Override
     public void handleResult(Result result) {
         final String dID = result.getText();
