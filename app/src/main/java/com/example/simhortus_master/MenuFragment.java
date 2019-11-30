@@ -1,8 +1,12 @@
 package com.example.simhortus_master;
 
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +26,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 public class MenuFragment extends Fragment {
 
 
-    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLinked;
+    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLink, btnUnlink, btnPos, btnNeg;
     TextView txtEmail, txtDispName, txtPhone;
     String uid;
 
@@ -46,7 +49,8 @@ public class MenuFragment extends Fragment {
         btnContact = rootView.findViewById(R.id.btnContact);
         btnEmail = rootView.findViewById(R.id.btnEmail);
         btnPass = rootView.findViewById(R.id.btnPass);
-        btnLinked = rootView.findViewById(R.id.btnLinkedDevice);
+        btnLink = rootView.findViewById(R.id.btnLinkedDevice);
+        btnUnlink = rootView.findViewById(R.id.btnUnlinked);
 
         txtEmail = rootView.findViewById(R.id.txtEmail);
         txtDispName = rootView.findViewById(R.id.txtDispName);
@@ -57,9 +61,9 @@ public class MenuFragment extends Fragment {
 
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference getRef = firebaseDatabase.getReference("Users");
+        final DatabaseReference getRef = firebaseDatabase.getReference("Users");
 
         //getting email
         if (user != null) {
@@ -67,9 +71,6 @@ public class MenuFragment extends Fragment {
             txtEmail.setText(email);
             uid = user.getUid();
         }
-
-
-
 
         //getting data
         getRef.child(uid).addValueEventListener(new ValueEventListener() {
@@ -135,12 +136,20 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        btnLinked.setOnClickListener(new View.OnClickListener() {
+        btnLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToScanActivity();
             }
         });
+
+        btnUnlink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unlinkDevice();
+            }
+        });
+
 
         return rootView;
     }
@@ -169,17 +178,15 @@ public class MenuFragment extends Fragment {
         startActivity(new Intent(getContext(), ScanGarden.class));
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
-
         DatabaseReference getRef = firebaseDatabase.getReference("Users");
 
         getRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("deviceID")){
+                if (dataSnapshot.hasChild("garden_id")){
                     layoutLink.setVisibility(View.GONE);
                     layoutUnlink.setVisibility(View.VISIBLE);
                 } else {
@@ -193,8 +200,86 @@ public class MenuFragment extends Fragment {
 
             }
         });
+    }
+
+    public void Reload() {
+
+        new Handler().post(new Runnable() {
+
+            @Override
+            public void run()
+            {
+                Intent intent = getActivity().getIntent();
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                getActivity().overridePendingTransition(0, 0);
+                getActivity().finish();
+
+                getActivity().overridePendingTransition(0, 0);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    public void unlinkDevice() {
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        final DatabaseReference getRef = firebaseDatabase.getReference("Users");
+        final DatabaseReference garRef = firebaseDatabase.getReference("Garden");
+
+        final Dialog myDialog = new Dialog(getContext());
+
+        myDialog.setContentView(R.layout.dialog_custom_alert);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        final TextView textView =  myDialog.findViewById(R.id.displayID);
+        final TextView hiddenText = myDialog.findViewById(R.id.hiddenText);
 
 
+        final DatabaseReference getID = getRef.child(uid).child("garden_id");
+        getID.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String id = dataSnapshot.getValue().toString();
+                textView.setText("Device ID: "+id);
+                hiddenText.setText(id);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        btnNeg = myDialog.findViewById(R.id.btnNeg);
+        btnPos = myDialog.findViewById(R.id.btnPos);
+
+        btnNeg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        btnPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference remove = getRef.child(uid).child("garden_id");
+                remove.setValue(null);
+
+                String gID = hiddenText.getText().toString();
+                garRef.child(gID).child(uid).setValue(null);
+
+                Global.showToast("Device disconnected", getContext());
+                Reload();
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.show();
 
     }
 }
