@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuFragment extends Fragment {
 
 
-    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLink, btnUnlink, btnPos, btnNeg;
+    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLink, btnUnlink, btnPos, btnNeg, btnConAcc;
     TextView txtEmail, txtDispName, txtPhone;
     String uid;
 
@@ -51,6 +51,8 @@ public class MenuFragment extends Fragment {
         btnPass = rootView.findViewById(R.id.btnPass);
         btnLink = rootView.findViewById(R.id.btnLinkedDevice);
         btnUnlink = rootView.findViewById(R.id.btnUnlinked);
+        btnConAcc = rootView.findViewById(R.id.btnConAcc);
+
 
         txtEmail = rootView.findViewById(R.id.txtEmail);
         txtDispName = rootView.findViewById(R.id.txtDispName);
@@ -147,6 +149,15 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 unlinkDevice();
+            }
+        });
+
+        btnConAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),ConnectedAccounts.class));
+                getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+
             }
         });
 

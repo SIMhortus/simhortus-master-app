@@ -1,6 +1,7 @@
 package com.example.simhortus_master;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ public class Global {
     public static void showToast(String msg, Context ctx) {
         Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show();
     }
-
-
+    public static float pxFromDp(float dp, Context mContext) {
+        return dp * mContext.getResources().getDisplayMetrics().density;
+    }
 }

@@ -115,11 +115,9 @@ public class MainActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.dashboard:
 
-                            String bol = isValid.toString();
 
                             if (replaceLayout() == true) {
                                 selectedFragment = new EmptyFragment();
-                                Global.showToast(bol, MainActivity.this);
                             } else  {
                                 selectedFragment = new DashboardFragment();
                             }
@@ -138,11 +136,11 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = new EmptyFragment();
                             } else  {
                                 selectedFragment = new NotificationsFragment();
+
                             }
                             break;
                         case R.id.menu:
                             selectedFragment = new MenuFragment();
-
                             break;
                     }
 
