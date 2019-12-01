@@ -81,7 +81,7 @@ public class MenuFragment extends Fragment {
 
                 String firstName = dataSnapshot.child("first_name").getValue(String.class);
                 String lastName = dataSnapshot.child("last_name").getValue(String.class);
-                String phone = dataSnapshot.child("phone_number").getValue(String.class);
+                String phone = "0" + dataSnapshot.child("phone_number").getValue(String.class).substring(3);
 
                 txtDispName.setText(firstName + " " + lastName);
 

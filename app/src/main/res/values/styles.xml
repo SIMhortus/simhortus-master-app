@@ -14,11 +14,17 @@
         <item name="colorAccent">#ffffff</item>
     </style>
 
+    <style name="SubFlatButton" parent="Theme.AppCompat.Light">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="colorControlHighlight">@color/colorSub</item>
+        <item name="android:backgroundTint">@color/colorSub</item>
+        <item name="colorAccent">#ffffff</item>
+    </style>
+
     <style name="hyperlink" parent="Theme.AppCompat.Light">
         <item name="android:textColor" >@color/hyperlink</item>
         <item name="android:padding" >10dp</item>
     </style>
-
 
     <style name="DialogTheme" parent="MaterialAlertDialog.MaterialComponents.Title.Icon.CenterStacked">
         <!-- Customize your theme here. -->
