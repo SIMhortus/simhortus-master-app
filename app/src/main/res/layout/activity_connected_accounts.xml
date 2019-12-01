@@ -1,87 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFF">
 
 
-    <LinearLayout
-        android:id="@+id/accountLayout"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:background="#FFFFFF"
-        android:layout_height="match_parent">
-        <include layout="@layout/in_toolbar"/>
+    <include layout="@layout/in_toolbar"/>
 
-        <TextView
-            android:id="@+id/passID"
-            android:paddingHorizontal="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13dp"
-            android:text="Owner"/>
+    <TextView
+        android:id="@+id/passID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:text="Owner"
+        android:textSize="13dp"
+        android:visibility="invisible" />
 
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
 
-        <GridLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:paddingHorizontal="10dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/greyDarker"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:text="Roselle Tabuena"/>
-
-                <TextView
-                    android:id="@+id/txtDispName"
-                    android:paddingHorizontal="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13dp"
-                    android:text="roselletabuena@gmail.com"/>
-
-                <TextView
-                    android:id="@+id/txtType"
-                    android:paddingHorizontal="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13dp"
-                    android:text="Owner"/>
-
-            </LinearLayout>
-
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_disp_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/transparent"
-                android:layout_gravity="right"
-                android:text="Remove"
-                android:textAllCaps="false"
-                android:textColor="#38A746"
-                android:textSize="12dp" />
-
-        </GridLayout>
-
-        androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMenuLogOut"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="log out"/>
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

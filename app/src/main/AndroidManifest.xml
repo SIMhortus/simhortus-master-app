@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConnectedAccounts"></activity>
         <activity android:name=".EmptyFragment" />
         <activity android:name=".ScanCodeActivity" />
         <activity android:name=".ScanGarden" />

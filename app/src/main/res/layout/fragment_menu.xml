@@ -242,7 +242,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLinkedDevice"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:paddingLeft="10dp"
@@ -250,6 +250,8 @@
                 android:textColor="@color/greyLight"
                 android:textAlignment="textStart"
                 android:text="Link a garden"/>
+
+
 
         </GridLayout>
 
@@ -277,18 +279,53 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:paddingLeft="10dp"
-                android:text="Unlink a garden"
+                android:text="Unlink garden"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textColor="@color/greyLight" />
 
         </GridLayout>
 
+
+
+<!--        <GridLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="31dp"-->
+<!--                android:layout_height="31dp"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:background="@drawable/bg_blue"-->
+<!--                android:padding="5dp"-->
+<!--                android:tint="@color/white"-->
+<!--                app:srcCompat="@drawable/ic_request" />-->
+
+
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/btnShared"-->
+<!--                android:layout_width="250dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/transparent"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:text="Shared Garden Request"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="@color/greyLight" />-->
+
+
+<!--        </GridLayout>-->
+
+
         <GridLayout
+            android:id="@+id/layoutShared"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="31dp"
@@ -297,21 +334,36 @@
                 android:background="@drawable/bg_blue"
                 android:padding="5dp"
                 android:tint="@color/white"
-                app:srcCompat="@drawable/ic_connect" />
+                app:srcCompat="@drawable/ic_request" />
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnConAcc"
-                android:layout_width="match_parent"
+                android:id="@+id/btnShared"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:paddingLeft="10dp"
-                android:text="Connected Accounts"
+                android:text="Shared Garden Request"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textColor="@color/greyLight" />
 
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/span"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_pink"
+                android:text="0"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:visibility="invisible" />
+
         </GridLayout>
+
+
 
 
         <androidx.appcompat.widget.AppCompatButton

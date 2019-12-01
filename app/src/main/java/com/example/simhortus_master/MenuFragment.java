@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,16 +26,20 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.EventListener;
+
 
 public class MenuFragment extends Fragment {
 
 
-    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLink, btnUnlink, btnPos, btnNeg, btnConAcc;
+    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLink, btnUnlink, btnPos, btnNeg, btnReq, notif;
     TextView txtEmail, txtDispName, txtPhone;
     String uid, phone;
 
-    GridLayout layoutLink, layoutUnlink;
+    GridLayout layoutLink, layoutUnlink, layoutShared;
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth mAuth;
@@ -51,8 +57,8 @@ public class MenuFragment extends Fragment {
         btnPass = rootView.findViewById(R.id.btnPass);
         btnLink = rootView.findViewById(R.id.btnLinkedDevice);
         btnUnlink = rootView.findViewById(R.id.btnUnlinked);
-        btnConAcc = rootView.findViewById(R.id.btnConAcc);
-
+        btnReq = rootView.findViewById(R.id.btnShared);
+        notif = rootView.findViewById(R.id.span);
 
         txtEmail = rootView.findViewById(R.id.txtEmail);
         txtDispName = rootView.findViewById(R.id.txtDispName);
@@ -60,6 +66,7 @@ public class MenuFragment extends Fragment {
 
         layoutLink = rootView.findViewById(R.id.layoutLink);
         layoutUnlink = rootView.findViewById(R.id.layoutUnlink);
+        layoutShared = rootView.findViewById(R.id.layoutShared);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -73,6 +80,68 @@ public class MenuFragment extends Fragment {
             txtEmail.setText(email);
             uid = user.getUid();
         }
+
+        DatabaseReference hasGarden = getRef.child(user.getUid());
+
+
+
+        //for admin
+
+        hasGarden.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("type")){
+                    layoutShared.setVisibility(rootView.GONE);
+                }
+
+                Boolean val = (Boolean) dataSnapshot.child("type").getValue();
+                if (val == true) {
+                    layoutShared.setVisibility(rootView.VISIBLE);
+
+                    getRef.child(user.getUid()).child("garden_id").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String id = dataSnapshot.getValue().toString();
+                            Global.showToast(id, getContext());
+
+                            final Query query = firebaseDatabase.getReference("Users")
+                                    .orderByChild("user_type").equalTo("user_"+id+"_0");
+
+                            query.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String no = String.valueOf(dataSnapshot.getChildrenCount());
+                                    notif.setVisibility(View.VISIBLE);
+                                    notif.setText(no);
+                                    if (notif.getText().toString().equals("0")){
+                                        notif.setVisibility(View.INVISIBLE);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         //getting data
         getRef.child(uid).addValueEventListener(new ValueEventListener() {
@@ -158,10 +227,13 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        btnConAcc.setOnClickListener(new View.OnClickListener() {
+        btnReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),ConnectedAccounts.class));
+                AccountsFragment accountsFragment  = new AccountsFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, accountsFragment);
+                transaction.commit();
                 getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
 
             }
@@ -286,9 +358,10 @@ public class MenuFragment extends Fragment {
             public void onClick(View v) {
                 DatabaseReference remove = getRef.child(uid).child("garden_id");
                 remove.setValue(null);
-
                 String gID = hiddenText.getText().toString();
-                garRef.child(gID).child(uid).setValue(null);
+
+                garRef.child(gID).child("users").child(uid).setValue(null);
+                getRef.child(gID).child("Users").child(uid).child("user_type").setValue(null);
 
                 Global.showToast("Device disconnected", getContext());
                 Reload();

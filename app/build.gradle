@@ -37,6 +37,7 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database:17.0.0'
+    implementation 'com.firebaseui:firebase-ui-database:6.1.0'
     //for circular image view
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     //Scanner
