@@ -31,7 +31,7 @@ public class MenuFragment extends Fragment {
 
     Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLink, btnUnlink, btnPos, btnNeg, btnConAcc;
     TextView txtEmail, txtDispName, txtPhone;
-    String uid;
+    String uid, phone;
 
     GridLayout layoutLink, layoutUnlink;
 
@@ -81,7 +81,13 @@ public class MenuFragment extends Fragment {
 
                 String firstName = dataSnapshot.child("first_name").getValue(String.class);
                 String lastName = dataSnapshot.child("last_name").getValue(String.class);
-                String phone = "0" + dataSnapshot.child("phone_number").getValue(String.class).substring(3);
+                String testPhone = dataSnapshot.child("phone_number").getValue(String.class);
+                if(testPhone.equals("")){
+                    phone = "";
+                }
+                else{
+                    phone = "0" + dataSnapshot.child("phone_number").getValue(String.class).substring(3);
+                }
 
                 txtDispName.setText(firstName + " " + lastName);
 

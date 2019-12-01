@@ -151,14 +151,23 @@ public class UpdateContact extends AppCompatDialogFragment {
                         edtCodePhone.setError( "Verification code is required!" );
                     }
                     else{
-                        if(newPhoneNumber.equals(phoneNumber.substring(3))){
-                            Toast.makeText(getActivity(), "Please enter a new phone number", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        if(phoneNumber.equals("")){
                             try {
                                 verifyCode();
                             } catch (Exception e) {
                                 e.printStackTrace();
+                            }
+                        }
+                        else{
+                            if(newPhoneNumber.equals(phoneNumber.substring(3))){
+                                Toast.makeText(getActivity(), "Please enter a new phone number", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                try {
+                                    verifyCode();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -177,7 +186,6 @@ public class UpdateContact extends AppCompatDialogFragment {
         else if (((isValid(edtNewPhoneNumber.getText().toString())) && (edtNewPhoneNumber.getText().toString().length() == 10))) {
             String newPhoneNumber = edtNewPhoneNumber.getText().toString();
             if(phoneNumber.equals("")){
-                Toast.makeText(getActivity(), "Linking +63" + edtNewPhoneNumber.getText().toString().trim(), Toast.LENGTH_SHORT).show();
                 String sendPhoneNumber = "+63" + edtNewPhoneNumber.getText().toString().trim();
 
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -195,7 +203,6 @@ public class UpdateContact extends AppCompatDialogFragment {
                     Toast.makeText(getActivity(), "Unlinking +63" + phoneNumber.substring(3), Toast.LENGTH_SHORT).show();
                     reference.child(uid).child("phone_number").setValue("");
                     mAuth.getCurrentUser().unlink(PhoneAuthProvider.PROVIDER_ID);
-                    Toast.makeText(getActivity(), "Linking +63" + edtNewPhoneNumber.getText().toString().trim(), Toast.LENGTH_SHORT).show();
                     String sendPhoneNumber = "+63" + edtNewPhoneNumber.getText().toString().trim();
                     PhoneAuthProvider.getInstance().verifyPhoneNumber(
                             sendPhoneNumber,        // Phone number to verify
@@ -215,7 +222,9 @@ public class UpdateContact extends AppCompatDialogFragment {
     private void verifyCode(){
         String code = edtCodePhone.getText().toString();
         Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
-        PhoneAuthCredential phoneCredential = PhoneAuthProvider.getCredential(codeSent, code);
+        PhoneAuthCredential phoneCredential = PhoneAuthProvider.getInstance().getCredential(codeSent, code);
+//        Toast.makeText(getActivity(), "codeSent: " + codeSent, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "code: " + code, Toast.LENGTH_SHORT).show();
         linkWithPhoneAuthCredential(phoneCredential);
     };
 
@@ -251,6 +260,7 @@ public class UpdateContact extends AppCompatDialogFragment {
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(getActivity(), "Linking +63" + edtNewPhoneNumber.getText().toString().trim(), Toast.LENGTH_SHORT).show();
                         if (task.isSuccessful()) {
                             String newPhoneNumber = "+63" + edtNewPhoneNumber.getText().toString();
                             reference.child(uid).child("phone_number").setValue(newPhoneNumber);
@@ -258,7 +268,7 @@ public class UpdateContact extends AppCompatDialogFragment {
                             dismiss();
                         }
                         else {
-                            Toast.makeText(getActivity(), "Wrong verification code", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Linking failed. Wrong verification code", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

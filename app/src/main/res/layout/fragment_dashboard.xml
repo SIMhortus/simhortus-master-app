@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swiperefresh_items"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,8 +10,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="#FFF">
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +23,318 @@
             android:textSize="30dp"
             android:text="dashboard"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Soil Moisture"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingBottom="20dp">
+
+                <GridLayout
+                    android:id="@+id/grd_pot1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/img_ic_pot1"
+                        android:layout_width="31dp"
+                        android:layout_height="31dp"
+                        android:background="@drawable/bg_green"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/white"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_sweet_basil" />
+
+                    <TextView
+                        android:id="@+id/txt_sm_pot1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="23dp"
+                        android:layout_marginLeft="10dp"
+                        android:text=""/>
+
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/grd_pot2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/img_ic_pot2"
+                        android:layout_width="31dp"
+                        android:layout_height="31dp"
+                        android:background="@drawable/bg_green"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/white"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_thyme" />
+
+                    <TextView
+                        android:id="@+id/txt_sm_pot2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="23dp"
+                        android:text=""
+                        android:layout_marginLeft="10dp"/>
+
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/grd_pot3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/img_ic_pot3"
+                        android:layout_width="31dp"
+                        android:layout_height="31dp"
+                        android:background="@drawable/bg_green"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/white"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_thyme" />
+
+                    <TextView
+                        android:id="@+id/txt_sm_pot3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="23dp"
+                        android:text=""
+                        android:layout_marginLeft="10dp"/>
+
+                </GridLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingBottom="20dp">
+
+                <GridLayout
+                    android:id="@+id/grd_pot4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/img_ic_pot4"
+                        android:layout_width="31dp"
+                        android:layout_height="31dp"
+                        android:background="@drawable/bg_green"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/white"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_thyme" />
+
+                    <TextView
+                        android:id="@+id/txt_sm_pot4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="23dp"
+                        android:text=""
+                        android:layout_marginLeft="10dp"/>
+
+                </GridLayout>
+
+                <GridLayout
+                android:id="@+id/grd_pot5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img_ic_pot5"
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/bg_green"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/white"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_thyme" />
+
+                <TextView
+                    android:id="@+id/txt_sm_pot5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="23dp"
+                    android:text=""
+                    android:layout_marginLeft="10dp"/>
+
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/grd_pot6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/img_ic_pot6"
+                        android:layout_width="31dp"
+                        android:layout_height="31dp"
+                        android:background="@drawable/bg_green"
+                        android:layout_gravity="center_vertical"
+                        android:tint="@color/white"
+                        android:padding="5dp"
+                        app:srcCompat="@drawable/ic_thyme" />
+
+                    <TextView
+                        android:id="@+id/txt_sm_pot6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="23dp"
+                        android:text=""
+                        android:layout_marginLeft="10dp"/>
+
+                </GridLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Temperature"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/bg_red"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/white"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_temperature" />
+
+                <TextView
+                    android:id="@+id/txt_temp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="23dp"
+                    android:text=""
+                    android:layout_marginLeft="10dp"/>
+
+            </GridLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Humidity"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/bg_orange"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/white"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_humidity" />
+
+                <TextView
+                    android:id="@+id/txt_hum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="23dp"
+                    android:text=""
+                    android:layout_marginLeft="10dp"/>
+
+            </GridLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Water Tank"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="31dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/bg_blue"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/white"
+                    android:padding="5dp"
+                    app:srcCompat="@drawable/ic_water_tank" />
+
+                <TextView
+                    android:id="@+id/txt_tank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="23dp"
+                    android:text=""
+                    android:layout_marginLeft="10dp"/>
+
+            </GridLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
