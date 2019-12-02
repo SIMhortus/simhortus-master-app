@@ -102,28 +102,34 @@ public class MenuFragment extends Fragment {
                     getRef.child(user.getUid()).child("garden_id").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String id = dataSnapshot.getValue().toString();
-                            Global.showToast(id, getContext());
 
-                            final Query query = firebaseDatabase.getReference("Users")
-                                    .orderByChild("user_type").equalTo("user_" + id + "_0");
+                            if (dataSnapshot.getValue() == null){
 
-                            query.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    String no = String.valueOf(dataSnapshot.getChildrenCount());
-                                    notif.setVisibility(View.VISIBLE);
-                                    notif.setText(no);
-                                    if (notif.getText().toString().equals("0")) {
-                                        notif.setVisibility(View.INVISIBLE);
+
+                            } else {
+                                String id = dataSnapshot.getValue().toString();
+                                Global.showToast(id, getContext());
+
+                                final Query query = firebaseDatabase.getReference("Users")
+                                        .orderByChild("user_type").equalTo("user_" + id + "_0");
+
+                                query.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String no = String.valueOf(dataSnapshot.getChildrenCount());
+                                        notif.setVisibility(View.VISIBLE);
+                                        notif.setText(no);
+                                        if (notif.getText().toString().equals("0")) {
+                                            notif.setVisibility(View.INVISIBLE);
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                }
-                            });
+                                    }
+                                });
+                            }
 
                         }
 
