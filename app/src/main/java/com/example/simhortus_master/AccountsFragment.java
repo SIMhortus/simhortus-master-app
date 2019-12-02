@@ -70,6 +70,8 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final String id = dataSnapshot.getValue().toString();
+
+
                 passID.setText(id);
 
                 final Query query = firebaseDatabase.getReference("Users")

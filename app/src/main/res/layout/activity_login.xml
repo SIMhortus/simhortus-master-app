@@ -129,15 +129,18 @@
             android:text="LOG IN"
             app:elevation="10dp" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:layout_marginTop="10dp"
             android:id="@+id/btnSwitch"
-            style="@style/SubFlatButton"
+            android:background="@drawable/bg_btn_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="15dp"
+            android:fontFamily="sans-serif-medium"
+            style="@style/PrimaryFlatButton"
+            android:textColor="@color/greyDark"
             android:text="USE PHONE NUMBER INSTEAD"
-            app:elevation="10dp" />
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"

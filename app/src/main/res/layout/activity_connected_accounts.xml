@@ -17,7 +17,7 @@
         android:paddingHorizontal="10dp"
         android:text="Owner"
         android:textSize="13dp"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
     <ListView
         android:id="@+id/listView"

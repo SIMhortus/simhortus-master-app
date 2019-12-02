@@ -72,6 +72,7 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
                             rootRef.child(dID).child("users").child(uID).setValue(0);
                             ref.child(uID).child("garden_id").setValue(dID);
                             ref.child(uID).child("user_type").setValue("user_"+dID+"_0");
+                            ref.child(uID).child("type").setValue(false);
 
                             Toast.makeText(ScanCodeActivity.this, "SIM hortus App linked successfully" + num, Toast.LENGTH_LONG).show();
                             startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));

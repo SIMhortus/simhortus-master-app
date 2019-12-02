@@ -66,7 +66,6 @@ public class MenuFragment extends Fragment {
 
         layoutLink = rootView.findViewById(R.id.layoutLink);
         layoutUnlink = rootView.findViewById(R.id.layoutUnlink);
-        layoutShared = rootView.findViewById(R.id.layoutShared);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -85,18 +84,20 @@ public class MenuFragment extends Fragment {
 
 
 
+        layoutShared = rootView.findViewById(R.id.layoutShared);
         //for admin
 
         hasGarden.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("type")){
+                if (dataSnapshot.hasChild("type")) {
                     layoutShared.setVisibility(rootView.GONE);
                 }
 
                 Boolean val = (Boolean) dataSnapshot.child("type").getValue();
-                if (val == true) {
+                if (val == null) {
                     layoutShared.setVisibility(rootView.VISIBLE);
+
 
                     getRef.child(user.getUid()).child("garden_id").addValueEventListener(new ValueEventListener() {
                         @Override
@@ -105,7 +106,7 @@ public class MenuFragment extends Fragment {
                             Global.showToast(id, getContext());
 
                             final Query query = firebaseDatabase.getReference("Users")
-                                    .orderByChild("user_type").equalTo("user_"+id+"_0");
+                                    .orderByChild("user_type").equalTo("user_" + id + "_0");
 
                             query.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -113,7 +114,7 @@ public class MenuFragment extends Fragment {
                                     String no = String.valueOf(dataSnapshot.getChildrenCount());
                                     notif.setVisibility(View.VISIBLE);
                                     notif.setText(no);
-                                    if (notif.getText().toString().equals("0")){
+                                    if (notif.getText().toString().equals("0")) {
                                         notif.setVisibility(View.INVISIBLE);
                                     }
                                 }
@@ -131,8 +132,9 @@ public class MenuFragment extends Fragment {
 
                         }
                     });
-                }
 
+                } else if (val == true) {
+                    layoutShared.setVisibility(rootView.GONE);}
             }
 
             @Override
@@ -357,15 +359,33 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DatabaseReference remove = getRef.child(uid).child("garden_id");
-                remove.setValue(null);
-                String gID = hiddenText.getText().toString();
 
-                garRef.child(gID).child("users").child(uid).setValue(null);
-                getRef.child(gID).child("Users").child(uid).child("user_type").setValue(null);
+                getRef.child(uid).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("type")){
+                            getRef.setValue(null);
+                            String gID = hiddenText.getText().toString();
+
+                            garRef.child(gID).child("users").child(uid).setValue(null);
+                            getRef.child(gID).child("Users").child(uid).child("user_type").setValue(null);
 
                 Global.showToast("Device disconnected", getContext());
-                Reload();
-                myDialog.dismiss();
+                            Reload();
+                            myDialog.dismiss();
+                        } else {
+                            Global.showToast("Unlink error!", getContext());
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
         });
 
