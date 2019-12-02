@@ -36,6 +36,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.simhortus_master.R.*;
+
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonL, btnSwitch, btnLoginVCode;
@@ -53,25 +55,25 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(layout.activity_login);
 
-        buttonL = findViewById(R.id.btnLogin);
-        btnSwitch = findViewById(R.id.btnSwitch);
-        btnLoginVCode = findViewById(R.id.btnLoginVCode);
-        email = findViewById(R.id.lEmail);
-        password  = findViewById(R.id.lPassword);
-        forgotPassword  = findViewById(R.id.forgot_password);
-        loginPhone = findViewById(R.id.loginPhone);
-        loginCode  = findViewById(R.id.loginCode);
-        tilEmail = findViewById(R.id.text_input_layout);
-        tilPassword = findViewById(R.id.loginPassword);
-        tilCode = findViewById(R.id.tilCode);
-        tilPhone = findViewById(R.id.tilPhone);
+        buttonL = findViewById(id.btnLogin);
+        btnSwitch = findViewById(id.btnSwitch);
+        btnLoginVCode = findViewById(id.btnLoginVCode);
+        email = findViewById(id.lEmail);
+        password  = findViewById(id.lPassword);
+        forgotPassword  = findViewById(id.forgot_password);
+        loginPhone = findViewById(id.loginPhone);
+        loginCode  = findViewById(id.loginCode);
+        tilEmail = findViewById(id.text_input_layout);
+        tilPassword = findViewById(id.loginPassword);
+        tilCode = findViewById(id.tilCode);
+        tilPhone = findViewById(id.tilPhone);
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
         mAuth =  FirebaseAuth.getInstance();
-        awesomeValidation.addValidation(this, R.id.lEmail, Patterns.EMAIL_ADDRESS, R.string.email);
+        awesomeValidation.addValidation(this, id.lEmail, Patterns.EMAIL_ADDRESS, string.email);
 
         buttonL.setOnClickListener(this);
         btnSwitch.setOnClickListener(this);
@@ -124,6 +126,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             tilPhone.setVisibility(View.VISIBLE);
             tilCode.setVisibility(View.VISIBLE);
             btnLoginVCode.setVisibility(View.VISIBLE);
+            btnLoginVCode.setBackgroundColor(getResources().getColor(color.transparent));
+            btnLoginVCode.setTextColor(getResources().getColor(color.greyDarker));
             btnSwitch.setText("USE EMAIL INSTEAD");
             checkLoginWith = "phone";
         }
