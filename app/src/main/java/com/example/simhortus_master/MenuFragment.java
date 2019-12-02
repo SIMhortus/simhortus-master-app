@@ -104,7 +104,7 @@ public class MenuFragment extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             if (dataSnapshot.getValue() == null){
-
+                                Global.showToast("proceed to menu to link your device", getContext());
 
                             } else {
                                 String id = dataSnapshot.getValue().toString();
@@ -130,7 +130,6 @@ public class MenuFragment extends Fragment {
                                     }
                                 });
                             }
-
                         }
 
                         @Override
