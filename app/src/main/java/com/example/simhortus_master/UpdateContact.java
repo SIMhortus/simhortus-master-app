@@ -76,6 +76,10 @@ public class UpdateContact extends AppCompatDialogFragment {
                 .setPositiveButton("submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+
+
+
             }
         });
 
@@ -95,7 +99,7 @@ public class UpdateContact extends AppCompatDialogFragment {
         }
 
         //getting current phone number
-        firebaseDatabase.getReference().child(uid).addValueEventListener(new ValueEventListener() {
+        firebaseDatabase.getReference("Users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -223,8 +227,8 @@ public class UpdateContact extends AppCompatDialogFragment {
         String code = edtCodePhone.getText().toString();
         Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
         PhoneAuthCredential phoneCredential = PhoneAuthProvider.getInstance().getCredential(codeSent, code);
-//        Toast.makeText(getActivity(), "codeSent: " + codeSent, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(), "code: " + code, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "codeSent: " + codeSent, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "code: " + code, Toast.LENGTH_SHORT).show();
         linkWithPhoneAuthCredential(phoneCredential);
     };
 
@@ -247,10 +251,10 @@ public class UpdateContact extends AppCompatDialogFragment {
             Toast.makeText(getActivity(), "Sending code to " + sendPhoneNumber, Toast.LENGTH_SHORT).show();
             super.onCodeSent(s, forceResendingToken);
             codeSent = s;
-//            String code = edtCodePhone.getText().toString();
-//            Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
-//            PhoneAuthCredential phoneCredential = PhoneAuthProvider.getCredential(codeSent, code);
-//            linkWithPhoneAuthCredential(phoneCredential);
+            String code = edtCodePhone.getText().toString();
+            Toast.makeText(getActivity(), "Verifying", Toast.LENGTH_SHORT).show();
+            PhoneAuthCredential phoneCredential = PhoneAuthProvider.getCredential(codeSent, code);
+            linkWithPhoneAuthCredential(phoneCredential);
         }
     };
 

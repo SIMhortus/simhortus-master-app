@@ -25,7 +25,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseListOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -75,7 +74,7 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
                 passID.setText(id);
 
                 final Query query = firebaseDatabase.getReference("Users")
-                        .orderByChild("user_type").equalTo("user_"+id+"_0");
+                        .orderByChild("userType_deviceID_pending").equalTo("user_"+id+"_true");
 
                 FirebaseListOptions<UserGardenInfo> options = new FirebaseListOptions.Builder<UserGardenInfo>()
                         .setLayout(R.layout.listview_row)
@@ -109,15 +108,14 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                                    Log.i("MainActivity", child.getKey());
-                                                    con.setText("Accepted");
-                                                    reference.child(child.getKey()).child("is_approved").setValue(true);
-                                                    reference.child(child.getKey()).child("user_type").setValue("user_"+id+"_1");
-                                                    adapter.startListening();
 
+                                                    Log.e("Value", child.getKey());
+                                                    con.setText("Accepted");
+                                                    reference.child(child.getKey()).child("pending").setValue(null);
+                                                    reference.child(child.getKey()).child("userType_deviceID_pending").setValue("user_"+id+"_false");
+                                                    adapter.startListening();
                                                 }
                                             }
-
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -134,12 +132,17 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
                                         .addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                                    Log.i("MainActivity", child.getKey());
-                                                    con.setText("removed");
-                                                    reference.child(child.getKey()).child("is_approved").setValue(false);
-                                                    reference.child(child.getKey()).child("user_type").setValue("user_"+id+"_removed");
-                                                    adapter.startListening();
+
+                                                    Global.showToast("Under construction", getContext());
+//                                                    if (child.getValue() == ""){
+//                                                        Log.i("MainActivity", child.getKey());
+//                                                    }
+//                                                    con.setText("removed");
+//                                                    reference.child(child.getKey()).child("is_approved").setValue(false);
+//                                                    reference.child(child.getKey()).child("user_type").setValue("user_"+id+"_removed");
+//                                                    adapter.startListening();
 
                                                 }
                                             }

@@ -14,10 +14,23 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Global {
 
     public static FirebaseAuth mAuth;
+
     public static FirebaseDatabase ref = FirebaseDatabase.getInstance();
+
     public static FirebaseAuth mAuthInstance = mAuth.getInstance();
+
     public static FirebaseUser getmAuth = mAuthInstance.getCurrentUser();
+
     public static DatabaseReference getRef = ref.getReference("Users");
+
+    public static DatabaseReference gardenRef = ref.getReference("Garden");
+
+    public static DatabaseReference potRef = ref.getReference("Pot");
+
+    public static DatabaseReference herbsRef = ref.getReference("Herbs");
+
+
+
 
 
     public static void showToast(String msg, Context ctx) {

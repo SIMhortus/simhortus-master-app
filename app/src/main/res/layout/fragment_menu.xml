@@ -87,7 +87,7 @@
                 android:layout_gravity="center_vertical"
                 android:tint="@color/white"
                 android:padding="5dp"
-                app:srcCompat="@drawable/ic_name" />
+                app:srcCompat="@drawable/ic_email" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
             <ImageView
                 android:layout_width="31dp"
                 android:layout_height="31dp"
-                android:background="@drawable/bg_pink"
+                android:background="@drawable/bg_violet"
                 android:layout_gravity="center_vertical"
                 android:tint="@color/white"
                 android:padding="5dp"
@@ -192,7 +192,7 @@
             <ImageView
                 android:layout_width="31dp"
                 android:layout_height="31dp"
-                android:background="@drawable/bg_orange"
+                android:background="@drawable/bg_blue"
                 android:layout_gravity="center_vertical"
                 android:tint="@color/white"
                 android:padding="5dp"
@@ -223,35 +223,32 @@
         </GridLayout>
 
         <GridLayout
-            android:id="@+id/layoutLink"
+            android:id="@+id/layoutCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:visibility="gone"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="31dp"
                 android:layout_height="31dp"
-                android:background="@drawable/bg_blue"
+                android:background="@drawable/bg_yellow"
                 android:layout_gravity="center_vertical"
                 android:tint="@color/white"
                 android:padding="5dp"
-                app:srcCompat="@drawable/ic_link" />
+                app:srcCompat="@drawable/ic_pending" />
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnLinkedDevice"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:paddingLeft="10dp"
-                android:textAllCaps="false"
-                android:textColor="@color/greyLight"
+                android:text="Cancel request"
                 android:textAlignment="textStart"
-                android:text="Link a garden"/>
-
-
+                android:textAllCaps="false"
+                android:textColor="@color/greyLight" />
 
         </GridLayout>
 
@@ -285,7 +282,6 @@
                 android:textColor="@color/greyLight" />
 
         </GridLayout>
-
 
 
 <!--        <GridLayout-->
@@ -331,7 +327,7 @@
                 android:layout_width="31dp"
                 android:layout_height="31dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/bg_blue"
+                android:background="@drawable/bg_orange"
                 android:padding="5dp"
                 android:tint="@color/white"
                 app:srcCompat="@drawable/ic_request" />

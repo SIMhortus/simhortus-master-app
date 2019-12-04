@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.firebase.ui.database.FirebaseListOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,17 +32,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.EventListener;
+import static com.example.simhortus_master.Global.getRef;
 
 
 public class MenuFragment extends Fragment {
 
 
-    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnLink, btnUnlink, btnPos, btnNeg, btnReq, notif;
-    TextView txtEmail, txtDispName, txtPhone;
+    Button btnLogout, btnDispName, btnContact, btnEmail, btnPass, btnCancel, btnUnlink, btnPos, btnNeg, btnReq, notif;
+    TextView txtEmail, txtDispName, txtPhone, warningMessage, extra;
     String uid, phone;
+    ImageView image;
 
-    GridLayout layoutLink, layoutUnlink, layoutShared;
+    GridLayout layoutCancel, layoutUnlink, layoutShared;
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth mAuth;
@@ -55,7 +59,7 @@ public class MenuFragment extends Fragment {
         btnContact = rootView.findViewById(R.id.btnContact);
         btnEmail = rootView.findViewById(R.id.btnEmail);
         btnPass = rootView.findViewById(R.id.btnPass);
-        btnLink = rootView.findViewById(R.id.btnLinkedDevice);
+        btnCancel = rootView.findViewById(R.id.btnCancel);
         btnUnlink = rootView.findViewById(R.id.btnUnlinked);
         btnReq = rootView.findViewById(R.id.btnShared);
         notif = rootView.findViewById(R.id.span);
@@ -64,7 +68,7 @@ public class MenuFragment extends Fragment {
         txtDispName = rootView.findViewById(R.id.txtDispName);
         txtPhone = rootView.findViewById(R.id.txtPhone);
 
-        layoutLink = rootView.findViewById(R.id.layoutLink);
+        layoutCancel = rootView.findViewById(R.id.layoutCancel);
         layoutUnlink = rootView.findViewById(R.id.layoutUnlink);
 
 
@@ -80,101 +84,47 @@ public class MenuFragment extends Fragment {
             uid = user.getUid();
         }
 
+//        String check = notif.getText().toString();
+//        Global.showToast(check, getContext());
+//        if (check == "0"){
+//
+//            notif.setVisibility(View.INVISIBLE);
+//        } else {
+//            notif.setVisibility(View.VISIBLE);
+//        }
+
+
         DatabaseReference hasGarden = getRef.child(user.getUid());
 
-
-
         layoutShared = rootView.findViewById(R.id.layoutShared);
-        //for admin
-
-        hasGarden.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("type")) {
-                    layoutShared.setVisibility(rootView.GONE);
-                }
-
-                Boolean val = (Boolean) dataSnapshot.child("type").getValue();
-                if (val == null) {
-                    layoutShared.setVisibility(rootView.VISIBLE);
-
-
-                    getRef.child(user.getUid()).child("garden_id").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            if (dataSnapshot.getValue() == null){
-                                Global.showToast("proceed to menu to link your device", getContext());
-
-                            } else {
-                                String id = dataSnapshot.getValue().toString();
-                                Global.showToast(id, getContext());
-
-                                final Query query = firebaseDatabase.getReference("Users")
-                                        .orderByChild("user_type").equalTo("user_" + id + "_0");
-
-                                query.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        String no = String.valueOf(dataSnapshot.getChildrenCount());
-                                        notif.setVisibility(View.VISIBLE);
-                                        notif.setText(no);
-                                        if (notif.getText().toString().equals("0")) {
-                                            notif.setVisibility(View.INVISIBLE);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                } else if (val == true) {
-                    layoutShared.setVisibility(rootView.GONE);}
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
 
         //getting data
-        getRef.child(uid).addValueEventListener(new ValueEventListener() {
+        Global.getRef.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String firstName = dataSnapshot.child("first_name").getValue(String.class);
-                String lastName = dataSnapshot.child("last_name").getValue(String.class);
-                String testPhone = dataSnapshot.child("phone_number").getValue(String.class);
-                if(testPhone.equals("")){
-                    phone = "";
-                }
-                else{
-                    phone = "0" + dataSnapshot.child("phone_number").getValue(String.class).substring(3);
-                }
-
-                txtDispName.setText(firstName + " " + lastName);
-
-                if(phone.equals("")){
-                    txtPhone.setText("No phone number");
-                    btnContact.setText("Add");
-                }
-                else{
-                    txtPhone.setText(phone);
-                    btnContact.setText("Edit");
-                }
+//                String firstName = dataSnapshot.child("first_name").getValue(String.class);
+//                String lastName = dataSnapshot.child("last_name").getValue(String.class);
+//                String testPhone = dataSnapshot.child("phone_number").getValue(String.class).substring(3);
+//                if(testPhone.equals("")){
+//                    phone = "";
+//                }
+//                else{
+//                    phone = "0" + dataSnapshot.child("phone_number").getValue(String.class).substring(3);
+//                }
+//
+//                txtDispName.setText(firstName + " " + lastName);
+//
+//                if(phone.equals("")){
+//                    txtPhone.setText("No phone number");
+//                    btnContact.setText("Add");
+//                }
+//                else{
+//                    txtPhone.setText(phone);
+//                    btnContact.setText("Edit");
+//                }
             }
 
             @Override
@@ -220,10 +170,10 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        btnLink.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToScanActivity();
+               cancelRequest();
             }
         });
 
@@ -245,6 +195,8 @@ public class MenuFragment extends Fragment {
 
             }
         });
+
+
 
 
         return rootView;
@@ -277,18 +229,54 @@ public class MenuFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        DatabaseReference getRef = firebaseDatabase.getReference("Users");
 
         getRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("garden_id")){
-                    layoutLink.setVisibility(View.GONE);
-                    layoutUnlink.setVisibility(View.VISIBLE);
-                } else {
-                    layoutLink.setVisibility(View.VISIBLE);
+                if (dataSnapshot.hasChild("pending")) {
+
+                    layoutCancel.setVisibility(View.VISIBLE);
                     layoutUnlink.setVisibility(View.GONE);
+                    layoutShared.setVisibility(View.GONE);
+
+                } else {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                        Log.e("Value", child.getValue().toString());
+                        if (child.getValue().toString().equals("user")) {
+                            layoutShared.setVisibility(View.GONE);
+                            layoutUnlink.setVisibility(View.VISIBLE);
+                            layoutCancel.setVisibility(View.GONE);
+
+                        } else {
+                            String gID = dataSnapshot.child("garden_id").getValue().toString();
+                            getRef.orderByChild("userType_deviceID_pending")
+                                    .equalTo("user_"+gID+"_true")
+                                    .addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    long num = dataSnapshot.getChildrenCount();
+                                    String str = Long.toString(num);
+                                    if (((long) dataSnapshot.getChildrenCount()) != 0) {
+                                        notif.setVisibility(View.VISIBLE);
+                                        notif.setText(str);
+                                    } else {
+                                        notif.setVisibility(View.INVISIBLE);
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                            layoutCancel.setVisibility(View.GONE);
+                            layoutUnlink.setVisibility(View.VISIBLE);
+                            layoutShared.setVisibility(View.VISIBLE);
+
+                        }
+                    }
+
                 }
+
             }
 
             @Override
@@ -296,6 +284,8 @@ public class MenuFragment extends Fragment {
 
             }
         });
+
+
     }
 
     public void Reload() {
@@ -315,6 +305,65 @@ public class MenuFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+    }
+
+    public void cancelRequest() {
+
+
+
+        final Dialog myDialog = new Dialog(getContext());
+
+        myDialog.setContentView(R.layout.dialog_custom_alert);
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        btnNeg = myDialog.findViewById(R.id.btnNeg);
+        btnPos = myDialog.findViewById(R.id.btnPos);
+        warningMessage = myDialog.findViewById(R.id.message);
+        extra = myDialog.findViewById(R.id.displayID);
+        image = myDialog.findViewById(R.id.imageWarn);
+
+        warningMessage.setText("Are you sure you want to cancel your request?");
+        extra.setVisibility(View.GONE);
+        image.setImageResource(R.drawable.img_cancel);
+        image.getLayoutParams().height = 250;
+
+
+        final TextView hiddenText = myDialog.findViewById(R.id.hiddenText);
+
+
+        final DatabaseReference getID = getRef.child(uid).child("garden_id");
+        getID.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final String id = dataSnapshot.getValue().toString();
+                hiddenText.setText(id);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        btnNeg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        btnPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Global.showToast("Under construction!", getContext());
+
+            }
+        });
+
+        myDialog.show();
+
+
 
     }
 
@@ -348,8 +397,6 @@ public class MenuFragment extends Fragment {
             }
         });
 
-
-
         btnNeg = myDialog.findViewById(R.id.btnNeg);
         btnPos = myDialog.findViewById(R.id.btnPos);
 
@@ -363,23 +410,34 @@ public class MenuFragment extends Fragment {
         btnPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference remove = getRef.child(uid).child("garden_id");
 
                 getRef.child(uid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild("type")){
-                            getRef.setValue(null);
-                            String gID = hiddenText.getText().toString();
+                        if (dataSnapshot.hasChild("userType_deviceID_pending")){
 
-                            garRef.child(gID).child("users").child(uid).setValue(null);
-                            getRef.child(gID).child("Users").child(uid).child("user_type").setValue(null);
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                if (child.getValue().toString().equals("user")) {
+                                    String gID = hiddenText.getText().toString();
+                                    Log.e("Value: ",child.getValue().toString());
+                                    Global.gardenRef.child(gID).child("users").child(uid).setValue(null);
+                                    garRef.child(gID).child("users").child(uid).setValue(null);
+                                    getRef.child(uid).child("user_type").setValue(null);
+                                    getRef.child(uid).child("garden_id").setValue(null);
+                                    getRef.child(uid).child("userType_deviceID_pending").setValue(null);
 
-                Global.showToast("Device disconnected", getContext());
-                            Reload();
-                            myDialog.dismiss();
-                        } else {
-                            Global.showToast("Unlink error!", getContext());
+                                    Log.e("Value: ",gID +" "+ uid);
+                                    Global.showToast("Device disconnected", getContext());
+                                    startActivity(new Intent(getContext(), ScanGarden.class));
+                                    Reload();
+                                    myDialog.dismiss();
+
+                                } else if (child.getValue().toString().equals("owner")){
+                                    Global.showToast("Under construction", getContext());
+                                }
+                            }
+
+
                         }
 
                     }
@@ -389,8 +447,6 @@ public class MenuFragment extends Fragment {
 
                     }
                 });
-
-
             }
         });
 

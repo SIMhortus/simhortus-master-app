@@ -47,42 +47,25 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
     public void handleResult(Result result) {
         final String dID = result.getText();
 
-        final DatabaseReference ref = firebaseDatabase.getReference("Users");
-        final DatabaseReference rootRef = firebaseDatabase.getReference("Garden");
         final FirebaseUser user = mAuth.getCurrentUser();
         final String uID = user.getUid();
 
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Global.gardenRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
-
                 if (snapshot.hasChild(dID)) {
                     long num = snapshot.child(dID).child("users").getChildrenCount();
-                    if (num < 6 ){
-
-                        if (num == 0) {
-                            rootRef.child(dID).child("users").child(uID).setValue(1);
-                            ref.child(uID).child("garden_id").setValue(dID);
-                            ref.child(uID).child("user_type").setValue("owner_"+dID);
-
-                            Toast.makeText(ScanCodeActivity.this, "SIM hortus App linked successfully" + num, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
-                        } else {
-                            rootRef.child(dID).child("users").child(uID).setValue(0);
-                            ref.child(uID).child("garden_id").setValue(dID);
-                            ref.child(uID).child("user_type").setValue("user_"+dID+"_0");
-                            ref.child(uID).child("type").setValue(false);
-
-                            Toast.makeText(ScanCodeActivity.this, "SIM hortus App linked successfully" + num, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
-                        }
-
+                    if (num == 0) {
+                        Global.showToast("You are the first to scan this device so you will be automatically admin", ScanCodeActivity.this);
+                        addDevice(uID, "owner", dID);
+                        Global.getRef.child(uID).child("userType_deviceID_pending").setValue("user_"+dID);
                     } else {
-                        Global.showToast("Maximum account reached", ScanCodeActivity.this);
-                        onBackPressed();
+                        Global.showToast("You not the first to scan this garden so you will automatically be user", ScanCodeActivity.this);
+                        addDevice(uID, "user", dID);
+                        Global.getRef.child(uID).child("pending").setValue(true);
+                        Global.getRef.child(uID).child("userType_deviceID_pending").setValue("user_"+dID+"_true");
                     }
-
 
                 }  else {
                     Toast.makeText(ScanCodeActivity.this, "The scanned qr code is not registered in the database", Toast.LENGTH_LONG).show();
@@ -99,6 +82,14 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
 
     }
 
+
+    public void addDevice(String uID, String userType, String deviceID) {
+        Global.getRef.child(uID).child("garden_id").setValue(deviceID);
+        Global.getRef.child(uID).child("user_type").setValue(userType);
+
+        Global.gardenRef.child(deviceID).child("users").child(uID).setValue(userType);
+        startActivity(new Intent(ScanCodeActivity.this, MainActivity.class));
+    }
 
 
     @Override

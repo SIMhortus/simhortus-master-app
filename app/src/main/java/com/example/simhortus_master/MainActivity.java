@@ -1,9 +1,13 @@
 package com.example.simhortus_master;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.EventListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,12 +41,70 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        final BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.clearAnimation();
 
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuthInstance = mAuth.getInstance();
+        final FirebaseUser user = mAuthInstance.getCurrentUser();
+        final String uid = user.getUid();
+
+        if (user == null) {
+            startActivity(new Intent(MainActivity.this, Login.class));
+        } else  {
+            replaceLayout();
+
+            Global.getRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild("pending")){
+                        bottomNav.getMenu().getItem(0).setEnabled(false);
+                        bottomNav.getMenu().getItem(1).setEnabled(false);
+
+                        MenuItem menuItem = (MenuItem)bottomNav.getMenu().findItem(R.id.menu);
+                        menuItem.setChecked(true);
+
+                        Fragment selectedFragment = new MenuFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
+                    } else {
+
+                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                            if (child.getValue().toString().equals("user")){
+
+
+                            } else {
+
+                                bottomNav.getMenu().getItem(0).setEnabled(true);
+                                bottomNav.getMenu().getItem(1).setEnabled(true);
+
+                                MenuItem menuItem = (MenuItem)bottomNav.getMenu().findItem(R.id.dashboard);
+                                menuItem.setChecked(true);
+
+                                Fragment selectedFragment = new DashboardFragment();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
+                            }
+                        }
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+        }
+
+
+
+
         firebaseDatabase = FirebaseDatabase.getInstance();
     }
 
@@ -49,26 +112,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        final FirebaseUser user = mAuth.getCurrentUser();
+        replaceLayout();
 
-        if (user == null) {
-            startActivity(new Intent(MainActivity.this, Login.class));
-        } else  {
-            loadLayout();
-        }
     }
 
     public Boolean replaceLayout() {
 
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        final String uID = firebaseUser.getUid();
+        FirebaseAuth mAuthInstance = mAuth.getInstance();
+        FirebaseUser user = mAuthInstance.getCurrentUser();
+        String uID= user.getUid();
 
-        DatabaseReference databaseReference = firebaseDatabase.getReference("Users").child(uID);
+        Global.showToast(uID, MainActivity.this);
+
+        DatabaseReference databaseReference = Global.getRef.child(uID);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.hasChild("garden_id")) isValid = false;
+                    if (!(dataSnapshot.hasChild("garden_id"))){
+                        startActivity(new Intent(MainActivity.this, ScanGarden.class));
+                    }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -78,31 +141,6 @@ public class MainActivity extends AppCompatActivity {
         return isValid;
     }
 
-    public Boolean loadLayout() {
-
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        final String uID = firebaseUser.getUid();
-
-        DatabaseReference databaseReference = firebaseDatabase.getReference("Users").child(uID);
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("garden_id")) {
-                    Fragment  selectedFragment = new DashboardFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                } else {
-                    Fragment  selectedFragment = new EmptyFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        return isValid;
-    }
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -115,29 +153,15 @@ public class MainActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.dashboard:
 
-
-                            if (replaceLayout() == true) {
-                                selectedFragment = new EmptyFragment();
-                            } else  {
                                 selectedFragment = new DashboardFragment();
-                            }
-
                             break;
                         case R.id.herbs:
-                            if (replaceLayout() == true) {
-                                selectedFragment = new EmptyFragment();
-                            } else  {
                                 selectedFragment = new GardenFragment();
-                            }
 
                             break;
                         case R.id.notifications:
-                            if (replaceLayout() == true) {
-                                selectedFragment = new EmptyFragment();
-                            } else  {
                                 selectedFragment = new NotificationsFragment();
 
-                            }
                             break;
                         case R.id.menu:
                             selectedFragment = new MenuFragment();
