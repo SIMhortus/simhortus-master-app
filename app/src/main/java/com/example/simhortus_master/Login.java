@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +41,8 @@ import static com.example.simhortus_master.R.*;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
-    private Button buttonL, btnSwitch, btnLoginVCode;
+    private Button buttonL, btnSwitch;
+    MaterialButton btnLoginVCode;
     private EditText email, password, loginPhone, loginCode;
     private TextInputLayout tilEmail, tilPassword, tilPhone, tilCode;
     private String checkLoginWith = "email", codeSent, checkRegisteredPhoneNumber = "false";;

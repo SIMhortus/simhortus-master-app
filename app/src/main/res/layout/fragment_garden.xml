@@ -5,19 +5,334 @@ android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:background="#FFF">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="10dp">
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="Garden"/>
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
 
-</LinearLayout>
+        <RelativeLayout
+            android:id="@+id/first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="50dp"
+            android:paddingBottom="5dp">
+
+            <LinearLayout
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/browse"
+                        android:gravity="top"
+                        android:paddingLeft="23dp"
+                        android:text="My Garden"
+                        android:textColor="@color/grey"
+                        android:textSize="30dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="20dp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:paddingVertical="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:paddingVertical="30dp"
+                    android:background="@drawable/bg_herbs_pot"
+                    android:elevation="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/gdn_pot1"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="1dp"
+                            android:background="@drawable/img_pot_empty"/>
+
+                        <ImageButton
+                            android:id="@+id/gdn_pot2"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="1dp"
+                            android:background="@drawable/img_pot_empty" />
+
+                        <ImageButton
+                            android:id="@+id/gdn_pot3"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="1dp"
+                            android:background="@drawable/img_pot_empty" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/gdn_pot4"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="1dp"
+                            android:background="@drawable/img_pot_empty" />
+
+                        <ImageButton
+                            android:id="@+id/gdn_pot5"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="1dp"
+                            android:background="@drawable/img_pot_empty" />
+
+                        <ImageButton
+                            android:id="@+id/gdn_pot6"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="1dp"
+                            android:background="@drawable/img_pot_empty" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:text="@string/gdn_text1"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gdn_lnr_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_pot_empty"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/greyLight"
+                android:text="@string/gdn_pot_empty"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gdn_lnr_pot1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="30dp">
+
+            <ImageView
+                android:id="@+id/gdn_img_pot1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_pot_oregano"/>
+
+            <TextView
+                android:id="@+id/gdn_txt_pot1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/greyLight"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gdn_lnr_pot2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="30dp">
+
+            <ImageView
+                android:id="@+id/gdn_img_pot2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_pot_oregano"/>
+
+            <TextView
+                android:id="@+id/gdn_txt_pot2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/greyLight"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/gdn_lnr_pot3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="30dp">
+
+            <ImageView
+                android:id="@+id/gdn_img_pot3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_pot_oregano"/>
+
+            <TextView
+                android:id="@+id/gdn_txt_pot3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/greyLight"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/gdn_lnr_pot4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="30dp">
+
+            <ImageView
+                android:id="@+id/gdn_img_pot4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_pot_oregano"/>
+
+            <TextView
+                android:id="@+id/gdn_txt_pot4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/greyLight"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/gdn_lnr_pot5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="30dp">
+
+            <ImageView
+                android:id="@+id/gdn_img_pot5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_pot_oregano"/>
+
+            <TextView
+                android:id="@+id/gdn_txt_pot5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/greyLight"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/gdn_lnr_pot6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="30dp">
+
+            <ImageView
+                android:id="@+id/gdn_img_pot6"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_pot_oregano"/>
+
+            <TextView
+                android:id="@+id/gdn_txt_pot6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/greyLight"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 </ScrollView>

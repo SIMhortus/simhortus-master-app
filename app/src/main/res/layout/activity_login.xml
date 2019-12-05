@@ -132,7 +132,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_marginTop="10dp"
             android:id="@+id/btnSwitch"
-            android:background="@drawable/bg_btn_primary"
+            android:background="@drawable/bg_green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="15dp"

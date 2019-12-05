@@ -8,8 +8,10 @@
     <color name="hyperlink">#0F9638</color>
     <color name="transparent">#00F7F7F7</color>
     <color name="greyLight">#5A5A5A</color>
+    <color name="grey">#353333</color>
     <color name="greyDark">#4B4848</color>
     <color name="greyDarker">#2B2929</color>
     <color name="white">#FFFFFF</color>
     <color name="colorSub">#1c783b</color>
+    <color name="transparentBlack">#9CC7C7C7</color>
 </resources>

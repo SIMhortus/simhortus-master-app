@@ -6,6 +6,30 @@
     <string name="password">password is too short</string>
     <string name="phone_prefix">+63</string>
     <string name="retype_password">For security purposes, please type in your password below.</string>
+    <string name="gdn_text1">Click empty pot above to start planting</string>
+    <string name="gdn_pot_empty">This image represent that the pot is empty</string>
+    <string name="gdn_pot_planted1">You have planted\u0020</string>
+    <string name="gdn_pot_planted2">\u0020in pot\u0020</string>
+
+    <!--    Planting Instructions Data-->
+    <string-array name="pln_string_image">
+        <item>img_herbs_chinese_chives</item>
+        <item>img_herbs_italian_parsley</item>
+    </string-array>
+    <string-array name="pln_string_heading">
+        <item>Things that you need</item>
+        <item>Make the soil mixture</item>
+        <item>Prepare the pot</item>
+    </string-array>
+    <string-array name="pln_string_desc">
+        <item>Desc 1</item>
+        <item>Desc 2</item>
+        <item>Desc 3</item>
+    </string-array>
+    <string-array name="pln_string_things">
+        <item>Vermicast Soil</item>
+        <item>Vermicast</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

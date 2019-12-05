@@ -1,6 +1,5 @@
 package com.example.simhortus_master;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         bottomNav.clearAnimation();
 
-
         FirebaseAuth mAuthInstance = mAuth.getInstance();
         final FirebaseUser user = mAuthInstance.getCurrentUser();
         final String uid = user.getUid();
@@ -73,17 +72,16 @@ public class MainActivity extends AppCompatActivity {
                         for (DataSnapshot child: dataSnapshot.getChildren()) {
                             if (child.getValue().toString().equals("user")){
 
-
                             } else {
 
-                                bottomNav.getMenu().getItem(0).setEnabled(true);
-                                bottomNav.getMenu().getItem(1).setEnabled(true);
-
-                                MenuItem menuItem = (MenuItem)bottomNav.getMenu().findItem(R.id.dashboard);
-                                menuItem.setChecked(true);
-
-                                Fragment selectedFragment = new DashboardFragment();
-                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+//                                bottomNav.getMenu().getItem(R.id.dashboard).setEnabled(true);
+//                                bottomNav.getMenu().getItem(1).setEnabled(true);
+//
+//                                MenuItem menuItem = (MenuItem)bottomNav.getMenu().findItem(R.id.dashboard);
+//                                menuItem.setChecked(true);
+//
+//                                Fragment selectedFragment = new DashboardFragment();
+//                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
                             }
                         }
@@ -98,12 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
-
         }
-
-
-
 
         firebaseDatabase = FirebaseDatabase.getInstance();
     }
@@ -111,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         replaceLayout();
 
     }
@@ -131,6 +123,14 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (!(dataSnapshot.hasChild("garden_id"))){
                         startActivity(new Intent(MainActivity.this, ScanGarden.class));
+                    }
+                    else{
+                        DashboardFragment fragment = new DashboardFragment();
+                        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                     }
                 }
                 @Override
@@ -152,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()){
                         case R.id.dashboard:
-
                                 selectedFragment = new DashboardFragment();
                             break;
                         case R.id.herbs:
