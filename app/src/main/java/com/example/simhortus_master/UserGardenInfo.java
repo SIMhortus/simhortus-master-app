@@ -4,6 +4,9 @@ public class UserGardenInfo {
 
     public String first_name, last_name, phone_number, user_email;
 
+    public UserGardenInfo() {
+    }
+
     public UserGardenInfo(String first_name, String last_name, String phone_number, String user_email) {
         this.first_name = first_name;
         this.last_name = last_name;

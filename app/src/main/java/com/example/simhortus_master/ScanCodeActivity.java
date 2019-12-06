@@ -59,12 +59,16 @@ public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerV
                     if (num == 0) {
                         Global.showToast("You are the first to scan this device so you will be automatically admin", ScanCodeActivity.this);
                         addDevice(uID, "owner", dID);
-                        Global.getRef.child(uID).child("userType_deviceID_pending").setValue("user_"+dID);
-                    } else {
+                        Global.getRef.child(uID).child("userType_deviceID_pending").setValue("owner_"+dID);
+                    }  else if (num < 6) {
+
                         Global.showToast("You not the first to scan this garden so you will automatically be user", ScanCodeActivity.this);
                         addDevice(uID, "user", dID);
                         Global.getRef.child(uID).child("pending").setValue(true);
                         Global.getRef.child(uID).child("userType_deviceID_pending").setValue("user_"+dID+"_true");
+
+                    } else {
+                        Global.showToast("Maximum account reached!", ScanCodeActivity.this);
                     }
 
                 }  else {

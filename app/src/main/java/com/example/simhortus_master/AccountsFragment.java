@@ -71,6 +71,7 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
                 final String id = dataSnapshot.getValue().toString();
 
                 passID.setText(id);
+                passID.setVisibility(View.INVISIBLE);
 
 
                 final Query query = firebaseDatabase.getReference("Users")
@@ -93,7 +94,7 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
 
                         final UserGardenInfo userGardenInfo = (UserGardenInfo) model;
                         name.setText(userGardenInfo.getFirst_name()+ " "+ userGardenInfo.getLast_name());
-                        con.setText(userGardenInfo.getPhone_number());
+                        con.setText(userGardenInfo.getUser_email());
 
                         if (con.getText().toString().isEmpty()) {
                             con.setText("No contact number");
@@ -102,8 +103,8 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
                         btnAccept.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                reference.orderByChild("phone_number")
-                                        .equalTo(userGardenInfo.getPhone_number())
+                                reference.orderByChild("user_email")
+                                        .equalTo(userGardenInfo.getUser_email())
                                         .addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
