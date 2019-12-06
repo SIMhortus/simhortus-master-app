@@ -84,14 +84,14 @@ public class MenuFragment extends Fragment {
             uid = user.getUid();
         }
 
-//        String check = notif.getText().toString();
-//        Global.showToast(check, getContext());
-//        if (check == "0"){
-//
-//            notif.setVisibility(View.INVISIBLE);
-//        } else {
-//            notif.setVisibility(View.VISIBLE);
-//        }
+        String check = notif.getText().toString();
+        Global.showToast(check, getContext());
+        if (check == "0"){
+
+            notif.setVisibility(View.INVISIBLE);
+        } else {
+            notif.setVisibility(View.VISIBLE);
+        }
 
 
         DatabaseReference hasGarden = getRef.child(user.getUid());
@@ -105,26 +105,26 @@ public class MenuFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-//                String firstName = dataSnapshot.child("first_name").getValue(String.class);
-//                String lastName = dataSnapshot.child("last_name").getValue(String.class);
-//                String testPhone = dataSnapshot.child("phone_number").getValue(String.class).substring(3);
-//                if(testPhone.equals("")){
-//                    phone = "";
-//                }
-//                else{
-//                    phone = "0" + dataSnapshot.child("phone_number").getValue(String.class).substring(3);
-//                }
-//
-//                txtDispName.setText(firstName + " " + lastName);
-//
-//                if(phone.equals("")){
-//                    txtPhone.setText("No phone number");
-//                    btnContact.setText("Add");
-//                }
-//                else{
-//                    txtPhone.setText(phone);
-//                    btnContact.setText("Edit");
-//                }
+                String firstName = dataSnapshot.child("first_name").getValue(String.class);
+                String lastName = dataSnapshot.child("last_name").getValue(String.class);
+                String testPhone = dataSnapshot.child("phone_number").getValue(String.class);
+                if(testPhone.equals("")){
+                    phone = "";
+                }
+                else{
+                    phone = "0" + dataSnapshot.child("phone_number").getValue(String.class).substring(3);
+                }
+
+                txtDispName.setText(firstName + " " + lastName);
+
+                if(phone.equals("")){
+                    txtPhone.setText("No phone number");
+                    btnContact.setText("Add");
+                }
+                else{
+                    txtPhone.setText(phone);
+                    btnContact.setText("Edit");
+                }
             }
 
             @Override

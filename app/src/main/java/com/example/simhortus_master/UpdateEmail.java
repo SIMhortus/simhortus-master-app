@@ -112,12 +112,14 @@ public class UpdateEmail extends AppCompatDialogFragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+                                            final String uID = user.getUid();
                                             user.updateEmail(edtNewEmail.getText().toString().trim())
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
+
+                                                                Global.getRef.child(uID).child("user_email").setValue(edtNewEmail.getText().toString().trim());
                                                                 Toast.makeText(getActivity(), "Email address is updated.", Toast.LENGTH_LONG).show();
                                                                 dismiss();
                                                             } else {

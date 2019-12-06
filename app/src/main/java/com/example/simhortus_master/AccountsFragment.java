@@ -70,8 +70,8 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final String id = dataSnapshot.getValue().toString();
 
-
                 passID.setText(id);
+
 
                 final Query query = firebaseDatabase.getReference("Users")
                         .orderByChild("userType_deviceID_pending").equalTo("user_"+id+"_true");

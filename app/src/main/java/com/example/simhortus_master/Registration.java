@@ -80,7 +80,7 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
     private void submitForm() {
         if (awesomeValidation.validate()) {
 
-            String user_email = email.getText().toString().trim();
+            final String user_email = email.getText().toString().trim();
             String user_pass = password.getText().toString().trim();
             final String firstName = fName.getText().toString().trim();
             final String lastName = lName.getText().toString().trim();
@@ -106,6 +106,7 @@ public class Registration extends AppCompatActivity  implements View.OnClickList
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+                                                ref.child(uID).child("user_email").setValue(user_email);
                                                 startActivity(new Intent(Registration.this, MainActivity.class));
                                             } else {
                                                 Global.showToast(task.getException().getMessage(), Registration.this);
