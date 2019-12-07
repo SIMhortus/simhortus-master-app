@@ -114,7 +114,7 @@ public class HerbFragment extends Fragment implements View.OnClickListener {
 
 //                            getting and displaying pot number and soil moisture
                             if(snapshot.getKey().equals(formattedDate)){
-                                hrbTxtHeight.setText(snapshot.getValue().toString());
+                                hrbTxtHeight.setText(snapshot.getValue().toString() + " inches");
                             }
 
                             //getting and displaying herbs

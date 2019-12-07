@@ -82,6 +82,13 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
         gdnTxtPot5 = rootView.findViewById(R.id.gdn_txt_pot5);
         gdnTxtPot6 = rootView.findViewById(R.id.gdn_txt_pot6);
 
+        gdnLnrPot1.setVisibility(View.GONE);
+        gdnLnrPot2.setVisibility(View.GONE);
+        gdnLnrPot3.setVisibility(View.GONE);
+        gdnLnrPot4.setVisibility(View.GONE);
+        gdnLnrPot5.setVisibility(View.GONE);
+        gdnLnrPot6.setVisibility(View.GONE);
+
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -125,7 +132,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
 
                             switch(potNumber){
                                 case 1:
-                                    gdnLnrPot1.setVisibility(View.VISIBLE);
                                     final DatabaseReference potReference1 = firebaseDatabase.getReference().child("Pot").child(gardenID).child("Pot 1");
                                     potReference1.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -147,6 +153,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                                     gdnImgPot1.setImageResource(R.drawable.img_pot_oregano);
                                                 }
                                                 gdnTxtPot1.setText(getString(R.string.gdn_pot_planted1) + typeOfPlant + getString(R.string.gdn_pot_planted2) +  "1");
+                                                gdnLnrPot1.setVisibility(View.VISIBLE);
                                             }
                                             else{
                                                 gdnPot1.setBackground(getActivity().getDrawable(R.drawable.img_pot_empty));
@@ -161,7 +168,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                     });
 
                                 case 2:
-                                    gdnLnrPot2.setVisibility(View.VISIBLE);
                                     final DatabaseReference potReference2 = firebaseDatabase.getReference().child("Pot").child(gardenID).child("Pot 2");
                                     potReference2.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -181,6 +187,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                                     gdnImgPot2.setImageResource(R.drawable.img_pot_oregano);
                                                 }
                                                 gdnTxtPot2.setText(getString(R.string.gdn_pot_planted1) + typeOfPlant + getString(R.string.gdn_pot_planted2) +  "2");
+                                                gdnLnrPot2.setVisibility(View.VISIBLE);
                                             }
                                             else{
                                                 gdnPot2.setBackground(getActivity().getDrawable(R.drawable.img_pot_empty));
@@ -194,7 +201,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                         }
                                     });
                                 case 3:
-                                    gdnLnrPot3.setVisibility(View.VISIBLE);
                                     final DatabaseReference potReference3 = firebaseDatabase.getReference().child("Pot").child(gardenID).child("Pot 3");
                                     potReference3.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -214,6 +220,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                                     gdnImgPot3.setImageResource(R.drawable.img_pot_oregano);
                                                 }
                                                 gdnTxtPot3.setText(getString(R.string.gdn_pot_planted1) + typeOfPlant + getString(R.string.gdn_pot_planted2) +  "3");
+                                                gdnLnrPot3.setVisibility(View.VISIBLE);
                                             }
                                             else{
                                                 gdnPot3.setBackground(getActivity().getDrawable(R.drawable.img_pot_empty));
@@ -227,7 +234,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                         }
                                     });
                                 case 4:
-                                    gdnLnrPot4.setVisibility(View.VISIBLE);
                                     final DatabaseReference potReference4 = firebaseDatabase.getReference().child("Pot").child(gardenID).child("Pot 4");
                                     potReference4.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -247,6 +253,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                                     gdnImgPot4.setImageResource(R.drawable.img_pot_oregano);
                                                 }
                                                 gdnTxtPot4.setText(getString(R.string.gdn_pot_planted1) + typeOfPlant + getString(R.string.gdn_pot_planted2) + "4");
+                                                gdnLnrPot4.setVisibility(View.VISIBLE);
                                             }
                                             else{
                                                 gdnPot4.setBackground(getActivity().getDrawable(R.drawable.img_pot_empty));
@@ -260,7 +267,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                         }
                                     });
                                 case 5:
-                                    gdnLnrPot5.setVisibility(View.VISIBLE);
                                     final DatabaseReference potReference5 = firebaseDatabase.getReference().child("Pot").child(gardenID).child("Pot 5");
                                     potReference5.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -280,6 +286,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                                     gdnImgPot5.setImageResource(R.drawable.img_pot_oregano);
                                                 }
                                                 gdnTxtPot5.setText(getString(R.string.gdn_pot_planted1) + typeOfPlant + getString(R.string.gdn_pot_planted2) +  "5");
+                                                gdnLnrPot5.setVisibility(View.VISIBLE);
                                             }
                                             else{
                                                 gdnPot5.setBackground(getActivity().getDrawable(R.drawable.img_pot_empty));
@@ -293,7 +300,6 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                         }
                                     });
                                 case 6:
-                                    gdnLnrPot6.setVisibility(View.VISIBLE);
                                     final DatabaseReference potReference6 = firebaseDatabase.getReference().child("Pot").child(gardenID).child("Pot 6");
                                     potReference6.addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -313,6 +319,7 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                                     gdnImgPot6.setImageResource(R.drawable.img_pot_oregano);
                                                 }
                                                 gdnTxtPot6.setText(getString(R.string.gdn_pot_planted1) + typeOfPlant + getString(R.string.gdn_pot_planted2) +  "6");
+                                                gdnLnrPot6.setVisibility(View.VISIBLE);
                                             }
                                             else{
                                                 gdnPot6.setBackground(getActivity().getDrawable(R.drawable.img_pot_empty));
@@ -326,7 +333,8 @@ public class GardenFragment extends Fragment implements View.OnClickListener{
                                         }
                                     });
                             }
-                            if(potEmptyCounter == 6){
+                            if(gdnLnrPot1.getVisibility() == View.VISIBLE && gdnLnrPot2.getVisibility() == View.VISIBLE && gdnLnrPot3.getVisibility() == View.VISIBLE
+                                    && gdnLnrPot4.getVisibility() == View.VISIBLE && gdnLnrPot5.getVisibility() == View.VISIBLE && gdnLnrPot6.getVisibility() == View.VISIBLE){
                                 gdnLnrEmpty.setVisibility(View.GONE);
                             }
                             else{
