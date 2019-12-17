@@ -205,7 +205,7 @@ public class UpdateContact extends AppCompatDialogFragment {
                 }
                 else {
                     Toast.makeText(getActivity(), "Unlinking +63" + phoneNumber.substring(3), Toast.LENGTH_SHORT).show();
-                    reference.child(uid).child("phone_number").setValue("");
+//                    reference.child(uid).child("phone_number").setValue("");
                     mAuth.getCurrentUser().unlink(PhoneAuthProvider.PROVIDER_ID);
                     String sendPhoneNumber = "+63" + edtNewPhoneNumber.getText().toString().trim();
                     PhoneAuthProvider.getInstance().verifyPhoneNumber(

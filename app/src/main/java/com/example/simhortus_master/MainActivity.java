@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static FragmentManager fragmentManager;
     FirebaseAuth mAuth;
     FirebaseDatabase firebaseDatabase;
+    String gardenStatus = "pending";
 
 
     @Override
@@ -49,28 +50,35 @@ public class MainActivity extends AppCompatActivity {
         final FirebaseUser user = mAuthInstance.getCurrentUser();
         final String uid = user.getUid();
 
+        LoadingScreen loadingScreen = new LoadingScreen();
+        loadingScreen.show(getSupportFragmentManager(), "");
+
         if (user == null) {
             startActivity(new Intent(MainActivity.this, Login.class));
         } else  {
-            replaceLayout();
-
             Global.getRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.hasChild("pending")){
-                        bottomNav.getMenu().getItem(0).setEnabled(false);
-                        bottomNav.getMenu().getItem(1).setEnabled(false);
+                        gardenStatus = "pending";
 
-                        MenuItem menuItem = (MenuItem)bottomNav.getMenu().findItem(R.id.menu);
-                        menuItem.setChecked(true);
-
-                        Fragment selectedFragment = new MenuFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+//                        MenuItem menuItem = (MenuItem)bottomNav.getMenu().findItem(R.id.menu);
+//                        menuItem.setChecked(true);
+//
+//                        Fragment selectedFragment = new MenuFragment();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
                     } else {
-
                         for (DataSnapshot child: dataSnapshot.getChildren()) {
                             if (child.getValue().toString().equals("user")){
+                                gardenStatus = "gardening";
+
+//                                DashboardFragment fragment = new DashboardFragment();
+//                                FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+//                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                                fragmentTransaction.replace(R.id.fragment_container, fragment);
+//                                fragmentTransaction.addToBackStack(null);
+//                                fragmentTransaction.commit();
 
                             } else {
 
@@ -79,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //                                MenuItem menuItem = (MenuItem)bottomNav.getMenu().findItem(R.id.dashboard);
 //                                menuItem.setChecked(true);
-//
+////
 //                                Fragment selectedFragment = new DashboardFragment();
 //                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
@@ -95,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
+            replaceLayout();
         }
 
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -105,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         replaceLayout();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, new DashboardFragment());
+        transaction.commit();
 
     }
 
@@ -117,31 +128,23 @@ public class MainActivity extends AppCompatActivity {
         Global.showToast(uID, MainActivity.this);
 
         DatabaseReference databaseReference = Global.getRef.child(uID);
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (!(dataSnapshot.hasChild("garden_id"))){
-                        startActivity(new Intent(MainActivity.this, ScanGarden.class));
+                        gardenStatus = "nothing";
+//                        startActivity(new Intent(MainActivity.this, ScanGarden.class));
                     }
                     else{
-                        DashboardFragment fragment = new DashboardFragment();
-                        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container, fragment);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
+                        gardenStatus = "gardening";
                     }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 }
             });
         return isValid;
     }
-
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -150,23 +153,60 @@ public class MainActivity extends AppCompatActivity {
 
                     Fragment  selectedFragment = null;
 
-                    switch (menuItem.getItemId()){
-                        case R.id.dashboard:
+                    if(gardenStatus.equals("pending")){
+                        switch (menuItem.getItemId()){
+                            case R.id.dashboard:
+                                selectedFragment = new EmptyFragment();
+                                break;
+                            case R.id.herbs:
+                                selectedFragment = new EmptyFragment();
+
+                                break;
+                            case R.id.notifications:
+                                selectedFragment = new EmptyFragment();
+
+                                break;
+                            case R.id.menu:
+                                selectedFragment = new MenuFragment();
+                                break;
+                        }
+                    }
+                    else if(gardenStatus.equals("nothing")){
+                        switch (menuItem.getItemId()){
+                            case R.id.dashboard:
+                                selectedFragment = new EmptyFragment();
+                                break;
+                            case R.id.herbs:
+                                selectedFragment = new EmptyFragment();
+
+                                break;
+                            case R.id.notifications:
+                                selectedFragment = new EmptyFragment();
+
+                                break;
+                            case R.id.menu:
+                                selectedFragment = new MenuFragment();
+                                break;
+                        }
+                    }
+                    else if(gardenStatus.equals("gardening")){
+                        switch (menuItem.getItemId()){
+                            case R.id.dashboard:
                                 selectedFragment = new DashboardFragment();
-                            break;
-                        case R.id.herbs:
+                                break;
+                            case R.id.herbs:
                                 selectedFragment = new GardenFragment();
 
-                            break;
-                        case R.id.notifications:
+                                break;
+                            case R.id.notifications:
                                 selectedFragment = new NotificationsFragment();
 
-                            break;
-                        case R.id.menu:
-                            selectedFragment = new MenuFragment();
-                            break;
+                                break;
+                            case R.id.menu:
+                                selectedFragment = new MenuFragment();
+                                break;
+                        }
                     }
-
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }

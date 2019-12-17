@@ -15,8 +15,6 @@ public class EmptyFragment extends Fragment {
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
         final View rootView = inflater.inflate(R.layout.empty_data, container, false);
-
-
         return rootView;
     }
 }
