@@ -11,6 +11,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Global {
 
     public static FirebaseAuth mAuth;
@@ -29,6 +32,9 @@ public class Global {
 
     public static DatabaseReference herbsRef = ref.getReference("Herbs");
 
+    public static DatabaseReference notifRef = ref.getReference("notification");
+
+    public static String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 
 
 

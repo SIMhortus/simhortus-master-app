@@ -10,52 +10,90 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
+
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
 public class NotificationsFragment extends Fragment {
     Button button;
+    FirebaseListAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
 
         final View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
+       FirebaseUser firebaseUser = Global.getmAuth;
+       final String uID = firebaseUser.getUid();
 
-        button = rootView.findViewById(R.id.notif);
+        final Query query =  Global.notifRef.child(uID);
+        final ListView listView = rootView.findViewById(R.id.listView);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        Global.notifRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                addNotification();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(uID)){
+//                Global.showToast(uID, getActivity());
+//                    FirebaseListOptions<NotificationInfo> options = new FirebaseListOptions.Builder<NotificationInfo>()
+//                            .setLayout(R.layout.listview_row)
+//                            .setQuery(query, NotificationInfo.class)
+//                            .build();
+//
+//                    adapter = new FirebaseListAdapter<NotificationInfo>(options) {
+//                        @Override
+//                        protected void populateView(@NonNull View v, @NonNull NotificationInfo model, int position) {
+//                            TextView name = v.findViewById(R.id.displayName);
+//                            TextView desc = v.findViewById(R.id.desc);
+//                            TextView date = v.findViewById(R.id.date);
+//
+//                            final NotificationInfo notificationInfo = (NotificationInfo) model;
+//                            name.setText(notificationInfo.getFull_name());
+//                            desc.setText(notificationInfo.getDescription());
+//                            date.setText(notificationInfo.getDate());
+//
+//
+//
+//                        }
+//                    };
+//
+//                    listView.setAdapter(adapter);
+//                    adapter.startListening();
+
+                } else {
+
+                    Global.showToast("Nothing to show", getActivity());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
+
+
+
 
         return rootView;
 
     }
 
 
-    private void addNotification() {
-        // Builds your notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("John's Android Studio Tutorials")
-                .setContentText("A video has just arrived!");
-
-        // Creates the intent needed to show the notification
-        Intent notificationIntent = new Intent(getContext(), NotificationsFragment.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(getContext(), 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
-
-        // Add as notification
-        NotificationManager manager = (NotificationManager)  getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
-    }
 
 
 }

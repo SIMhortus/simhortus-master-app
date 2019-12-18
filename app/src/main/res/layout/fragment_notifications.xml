@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent" android:layout_height="match_parent"
-android:background="#FFF">
-
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="20dp">
+    android:background="#FFF">
 
 
-    <TextView
-        android:layout_width="match_parent"
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/browse"
+            android:gravity="top"
+            android:paddingLeft="23dp"
+            android:text="Notification"
+            android:paddingTop="10dp"
+            android:textColor="@color/grey"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="Notif"/>
-    <Button
-        android:id="@+id/notif"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Notif" />
-
+        android:text="Hello World!" />
 
 </LinearLayout>
-
-
-</ScrollView>

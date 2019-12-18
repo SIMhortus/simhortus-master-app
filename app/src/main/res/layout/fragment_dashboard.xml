@@ -15,21 +15,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingHorizontal="23dp"
         android:paddingBottom="20dp">
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/browse"
+            android:gravity="top"
+            android:text="Menu"
+            android:paddingTop="10dp"
+            android:textColor="@color/grey"
             android:textSize="30dp"
-            android:text="dashboard"/>
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:gravity="center_vertical"
+            android:text="Current status"
+            android:layout_weight="1"
+            android:textColor="#419C4E"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="2"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:paddingBottom="20dp">
 
             <TextView
@@ -234,17 +251,17 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"/>
 
+
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="31dp"
-                    android:layout_height="31dp"
-                    android:background="@drawable/bg_red"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/bg_yellow"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/white"
                     android:padding="5dp"
@@ -252,8 +269,10 @@
 
                 <TextView
                     android:id="@+id/txt_temp"
-                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:textSize="23dp"
                     android:text=""
                     android:layout_marginLeft="10dp"/>
@@ -287,6 +306,7 @@
                 <TextView
                     android:id="@+id/txt_hum"
                     android:layout_width="match_parent"
+                    android:textColor="@color/white"
                     android:layout_height="wrap_content"
                     android:textSize="23dp"
                     android:text=""

@@ -99,7 +99,7 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
                         if (con.getText().toString().isEmpty()) {
                             con.setText("No contact number");
                         }
-
+//
                         btnAccept.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -109,8 +109,6 @@ public class AccountsFragment extends Fragment implements View.OnClickListener{
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-
-                                                    Log.e("Value", child.getKey());
                                                     con.setText("Accepted");
                                                     reference.child(child.getKey()).child("pending").setValue(null);
                                                     reference.child(child.getKey()).child("userType_deviceID_pending").setValue("user_"+id+"_false");

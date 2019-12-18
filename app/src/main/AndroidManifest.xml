@@ -12,6 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".try_your_code_here">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".EmptyFragment" />
         <activity android:name=".ScanCodeActivity" />
         <activity android:name=".ScanGarden" />
@@ -21,16 +28,14 @@
         <activity android:name=".DashboardFragment" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".Registration" />
-        <activity android:name=".Login" >
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

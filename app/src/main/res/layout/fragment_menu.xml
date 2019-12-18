@@ -11,6 +11,20 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="#FFFFFF"
     android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/browse"
+            android:gravity="top"
+            android:paddingLeft="23dp"
+            android:text="Menu"
+            android:paddingTop="10dp"
+            android:textColor="@color/grey"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+
         <TextView
             android:layout_marginVertical="20dp"
             android:layout_width="match_parent"

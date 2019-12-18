@@ -20,9 +20,6 @@
         android:layout_height="605dp" >
 
 
-
-
-
     </androidx.viewpager.widget.ViewPager>
 
     <LinearLayout
